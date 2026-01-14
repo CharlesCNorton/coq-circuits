@@ -1,3 +1,12 @@
+---
+license: mit
+tags:
+- formal-verification
+- coq
+- threshold-logic
+- neuromorphic
+---
+
 # tiny-NOT-prover
 
 Formally verified NOT gate. Single threshold neuron computing negation with 100% accuracy.
