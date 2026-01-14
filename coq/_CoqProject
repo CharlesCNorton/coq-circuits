@@ -1,0 +1,114 @@
+-R . ""
+
+# Base library
+Base/Definitions.v
+Base/Tactics.v
+Base/WeightPatterns.v
+Base/Verification.v
+Base/Composition.v
+
+# Modular circuits
+Modular/ModMParametric.v
+Modular/Mod2.v
+Modular/Mod3.v
+Modular/Mod4.v
+Modular/Mod5.v
+Modular/Mod6.v
+Modular/Mod7.v
+Modular/Mod8.v
+Modular/Mod9.v
+Modular/Mod10.v
+Modular/Mod11.v
+Modular/Mod12.v
+
+# Boolean circuits
+Boolean/AND.v
+Boolean/OR.v
+Boolean/NAND.v
+Boolean/NOR.v
+Boolean/XOR.v
+Boolean/XNOR.v
+Boolean/NOT.v
+Boolean/Implies.v
+Boolean/BiImplies.v
+
+# Threshold circuits
+Threshold/Majority.v
+Threshold/Minority.v
+Threshold/KOutOfN.v
+Threshold/OneOutOfEight.v
+Threshold/TwoOutOfEight.v
+Threshold/ThreeOutOfEight.v
+Threshold/FourOutOfEight.v
+Threshold/FiveOutOfEight.v
+Threshold/SixOutOfEight.v
+Threshold/SevenOutOfEight.v
+Threshold/AllOutOfEight.v
+Threshold/AtLeastK.v
+Threshold/AtMostK.v
+Threshold/ExactlyK.v
+
+# Arithmetic circuits
+Arithmetic/HalfAdder.v
+Arithmetic/FullAdder.v
+Arithmetic/RippleCarry2Bit.v
+Arithmetic/RippleCarry4Bit.v
+Arithmetic/RippleCarry8Bit.v
+Arithmetic/Incrementer8Bit.v
+Arithmetic/Decrementer8Bit.v
+Arithmetic/Multiplier2x2.v
+Arithmetic/Multiplier4x4.v
+Arithmetic/Equality8Bit.v
+Arithmetic/GreaterThan8Bit.v
+Arithmetic/LessThan8Bit.v
+Arithmetic/GreaterOrEqual8Bit.v
+Arithmetic/LessOrEqual8Bit.v
+Arithmetic/Max8Bit.v
+Arithmetic/Min8Bit.v
+Arithmetic/AbsoluteDifference8Bit.v
+
+# Error detection circuits
+ErrorDetection/ParityChecker8Bit.v
+ErrorDetection/ParityGenerator8Bit.v
+ErrorDetection/EvenParityChecker.v
+ErrorDetection/OddParityChecker.v
+ErrorDetection/Checksum8Bit.v
+ErrorDetection/HammingEncode4Bit.v
+ErrorDetection/HammingDecode7Bit.v
+ErrorDetection/HammingSyndrome.v
+ErrorDetection/CRC4.v
+ErrorDetection/CRC8.v
+ErrorDetection/LongitudinalParity.v
+
+# Pattern recognition circuits
+PatternRecognition/HammingDistance8Bit.v
+PatternRecognition/AllOnes.v
+PatternRecognition/AllZeros.v
+PatternRecognition/LeadingOnes.v
+PatternRecognition/TrailingOnes.v
+PatternRecognition/Symmetry8Bit.v
+PatternRecognition/Alternating8Bit.v
+PatternRecognition/RunLength.v
+PatternRecognition/PopCount.v
+PatternRecognition/OneHotDetector.v
+
+# Combinational circuits
+Combinational/Multiplexer2to1.v
+Combinational/Multiplexer4to1.v
+Combinational/Multiplexer8to1.v
+Combinational/Demultiplexer1to2.v
+Combinational/Demultiplexer1to4.v
+Combinational/Demultiplexer1to8.v
+Combinational/Encoder8to3.v
+Combinational/Decoder3to8.v
+Combinational/PriorityEncoder8Bit.v
+Combinational/BarrelShifter8Bit.v
+
+# Extraction modules
+Extraction/ExtractModular.v
+Extraction/ExtractBoolean.v
+Extraction/ExtractThreshold.v
+Extraction/ExtractArithmetic.v
+Extraction/ExtractErrorDetection.v
+Extraction/ExtractPatternRecognition.v
+Extraction/ExtractCombinational.v

@@ -1,0 +1,45 @@
+# Coq compilation artifacts
+*.vo
+*.vok
+*.vos
+*.glob
+*.aux
+.*.aux
+.coq-native/
+
+# OCaml compilation artifacts
+*.cmi
+*.cmo
+*.cmx
+*.o
+*.a
+*.cma
+*.cmxa
+*.cmxs
+_build/
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.pytest_cache/
+*.egg-info/
+dist/
+build/
+
+# Editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Build artifacts
+extracted/*.ml
+extracted/*.mli
+!extracted/README.md
+
+# Temporary files
+*.tmp
+*.log
