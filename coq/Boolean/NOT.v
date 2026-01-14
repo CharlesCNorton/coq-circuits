@@ -94,6 +94,35 @@ Lemma not_false
   : not_circuit false = true.
 Proof. reflexivity. Qed.
 
+(** * Length Safety *)
+
+(** NOT weights have length 1 *)
+Lemma not_weights_length
+  : length not_weights = 1%nat.
+Proof. reflexivity. Qed.
+
+(** NOT requires exactly 1 input *)
+Theorem not_length_requirement (x : bool)
+  : gate_length_ok not_weights [x].
+Proof.
+  unfold gate_length_ok.
+  rewrite not_weights_length.
+  reflexivity.
+Qed.
+
+(** Length-safe NOT circuit *)
+Definition not_circuit_safe (x : bool)
+  : bool
+  := gate_safe not_weights not_bias [x] (not_length_requirement x).
+
+(** Safe version equivalent to unsafe version *)
+Theorem not_safe_equiv (x : bool)
+  : not_circuit_safe x = not_circuit x.
+Proof.
+  unfold not_circuit_safe, gate_safe.
+  reflexivity.
+Qed.
+
 (** * Network Architecture *)
 
 (** Total parameters: 2 (1 weight + 1 bias). *)

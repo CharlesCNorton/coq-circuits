@@ -6,6 +6,7 @@
 *.aux
 .*.aux
 .coq-native/
+.lia.cache
 
 # OCaml compilation artifacts
 *.cmi
@@ -46,6 +47,7 @@ extracted/*.mli
 upload_*.py
 test_*.py
 generate_*.py
+create_*.py
 
 # Weights (upload to HuggingFace, not repo)
 weights/

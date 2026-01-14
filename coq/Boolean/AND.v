@@ -120,6 +120,35 @@ Proof.
   destruct x; reflexivity.
 Qed.
 
+(** * Length Safety *)
+
+(** AND weights have length 2 *)
+Lemma and_weights_length
+  : length and_weights = 2%nat.
+Proof. reflexivity. Qed.
+
+(** AND requires exactly 2 inputs *)
+Theorem and_length_requirement (x y : bool)
+  : gate_length_ok and_weights [x; y].
+Proof.
+  unfold gate_length_ok.
+  rewrite and_weights_length.
+  reflexivity.
+Qed.
+
+(** Length-safe AND circuit *)
+Definition and_circuit_safe (x y : bool)
+  : bool
+  := gate_safe and_weights and_bias [x; y] (and_length_requirement x y).
+
+(** Safe version equivalent to unsafe version when lengths match *)
+Theorem and_safe_equiv (x y : bool)
+  : and_circuit_safe x y = and_circuit x y.
+Proof.
+  unfold and_circuit_safe, gate_safe.
+  reflexivity.
+Qed.
+
 (** * Network Architecture *)
 
 (** Total parameters: 3 (2 weights + 1 bias). *)

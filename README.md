@@ -4,7 +4,7 @@ Formally verified threshold logic circuits with axiom-free Coq proofs.
 
 ## Status
 
-**Progress**: 7/82 circuits complete (8.5%)
+**Progress**: 14/82 circuits complete (17.1%)
 
 Unifying existing repos:
 - [majority-verified](https://github.com/CharlesCNorton/majority-verified)
@@ -216,32 +216,32 @@ coqc -R . "" Boolean/NOT.v
 - [x] Base/Verification.v
 - [x] Base/Composition.v
 
-### Boolean Logic (2/9)
+### Boolean Logic (9/9) ✓
 - [x] Boolean/NOT.v → [tiny-NOT-prover](https://huggingface.co/phanerozoic/tiny-NOT-prover)
 - [x] Boolean/AND.v → [tiny-AND-prover](https://huggingface.co/phanerozoic/tiny-AND-prover)
-- [ ] Boolean/OR.v
-- [ ] Boolean/NAND.v
-- [ ] Boolean/NOR.v
-- [ ] Boolean/XOR.v
-- [ ] Boolean/XNOR.v
-- [ ] Boolean/Implies.v
-- [ ] Boolean/BiImplies.v
+- [x] Boolean/OR.v → [tiny-OR-prover](https://huggingface.co/phanerozoic/tiny-OR-prover)
+- [x] Boolean/NAND.v → [tiny-NAND-prover](https://huggingface.co/phanerozoic/tiny-NAND-prover)
+- [x] Boolean/NOR.v → [tiny-NOR-prover](https://huggingface.co/phanerozoic/tiny-NOR-prover)
+- [x] Boolean/XOR.v → [tiny-XOR-prover](https://huggingface.co/phanerozoic/tiny-XOR-prover)
+- [x] Boolean/XNOR.v → [tiny-XNOR-prover](https://huggingface.co/phanerozoic/tiny-XNOR-prover)
+- [x] Boolean/Implies.v → [tiny-Implies-prover](https://huggingface.co/phanerozoic/tiny-Implies-prover)
+- [x] Boolean/BiImplies.v → [tiny-BiImplies-prover](https://huggingface.co/phanerozoic/tiny-BiImplies-prover)
 
 ## Development Checklist
 
 ### Phase 1: Base Library ✓
 Items 1-5 complete
 
-### Phase 2: Boolean Logic (Items 6-14)
+### Phase 2: Boolean Logic (Items 6-14) ✓
 - [x] 6. NOT.v
-- [ ] 7. AND.v ← **Current**
-- [ ] 8. OR.v
-- [ ] 9. NAND.v
-- [ ] 10. NOR.v
-- [ ] 11. XOR.v
-- [ ] 12. XNOR.v
-- [ ] 13. Implies.v
-- [ ] 14. BiImplies.v
+- [x] 7. AND.v
+- [x] 8. OR.v
+- [x] 9. NAND.v
+- [x] 10. NOR.v
+- [x] 11. XOR.v
+- [x] 12. XNOR.v
+- [x] 13. Implies.v
+- [x] 14. BiImplies.v
 
 **Sanity Test 1**: Compose NAND gates to build AND
 

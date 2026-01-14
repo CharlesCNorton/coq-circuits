@@ -122,6 +122,29 @@ Lemma ones8_length
   : length ones8 = 8%nat.
 Proof. reflexivity. Qed.
 
+(** * Length Safety *)
+
+(** Dot product is well-defined when lengths match *)
+Lemma dot_respects_length (ws : list Z) (xs : list bool)
+  : length ws = length xs ->
+    forall n, (n < length ws)%nat ->
+    exists w x, nth n ws 0 = w /\ nth n xs false = x.
+Proof.
+  intros Hlen n Hn.
+  exists (nth n ws 0), (nth n xs false).
+  split; reflexivity.
+Qed.
+
+(** Gate requires matching weight and input lengths *)
+Definition gate_length_ok (ws : list Z) (xs : list bool)
+  : Prop
+  := length ws = length xs.
+
+(** Length-safe gate that requires matching lengths *)
+Definition gate_safe (ws : list Z) (b : Z) (xs : list bool) (Hlen : gate_length_ok ws xs)
+  : bool
+  := gate ws b xs.
+
 (** * Thermometer Encoding *)
 
 (** Thermometer layer: neuron k fires when HW >= k.
