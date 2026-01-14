@@ -43,3 +43,6 @@ extracted/*.mli
 # Temporary files
 *.tmp
 *.log
+upload_*.py
+test_*.py
+generate_*.py
