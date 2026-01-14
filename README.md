@@ -4,7 +4,7 @@ Formally verified threshold logic circuits with axiom-free Coq proofs.
 
 ## Status
 
-**Progress**: 6/82 circuits complete (7.3%)
+**Progress**: 7/82 circuits complete (8.5%)
 
 Unifying existing repos:
 - [majority-verified](https://github.com/CharlesCNorton/majority-verified)
@@ -46,7 +46,7 @@ coq-circuits/
 ├── README.md
 │
 ├── coq/
-│   ├── _CoqProject
+│   ├── _CoqProject              ✓
 │   ├── Makefile (planned)
 │   │
 │   ├── Base/
@@ -58,7 +58,7 @@ coq-circuits/
 │   │
 │   ├── Boolean/
 │   │   ├── NOT.v                 ✓
-│   │   ├── AND.v
+│   │   ├── AND.v                 ✓
 │   │   ├── OR.v
 │   │   ├── NAND.v
 │   │   ├── NOR.v
@@ -216,9 +216,9 @@ coqc -R . "" Boolean/NOT.v
 - [x] Base/Verification.v
 - [x] Base/Composition.v
 
-### Boolean Logic (1/9)
+### Boolean Logic (2/9)
 - [x] Boolean/NOT.v → [tiny-NOT-prover](https://huggingface.co/phanerozoic/tiny-NOT-prover)
-- [ ] Boolean/AND.v
+- [x] Boolean/AND.v → [tiny-AND-prover](https://huggingface.co/phanerozoic/tiny-AND-prover)
 - [ ] Boolean/OR.v
 - [ ] Boolean/NAND.v
 - [ ] Boolean/NOR.v
