@@ -47,8 +47,5 @@ upload_*.py
 test_*.py
 generate_*.py
 
-# Python scripts (local tooling only)
-*.py
-
 # Weights (upload to HuggingFace, not repo)
 weights/
