@@ -42,18 +42,128 @@ All proofs axiom-free.
 
 ```
 coq-circuits/
-├── coq/
-│   ├── Base/              # Core definitions, tactics, verification
-│   ├── Boolean/           # Boolean logic gates
-│   ├── Modular/           # MOD-m circuits
-│   ├── Threshold/         # Threshold functions
-│   ├── Arithmetic/        # Arithmetic circuits
-│   ├── ErrorDetection/    # Error detection
-│   ├── PatternRecognition/# Pattern recognition
-│   └── Combinational/     # Combinational logic
 ├── LICENSE
-└── README.md
+├── README.md
+│
+├── coq/
+│   ├── _CoqProject
+│   ├── Makefile (planned)
+│   │
+│   ├── Base/
+│   │   ├── Definitions.v         ✓
+│   │   ├── Tactics.v             ✓
+│   │   ├── WeightPatterns.v      ✓
+│   │   ├── Verification.v        ✓
+│   │   └── Composition.v         ✓
+│   │
+│   ├── Boolean/
+│   │   ├── NOT.v                 ✓
+│   │   ├── AND.v
+│   │   ├── OR.v
+│   │   ├── NAND.v
+│   │   ├── NOR.v
+│   │   ├── XOR.v
+│   │   ├── XNOR.v
+│   │   ├── Implies.v
+│   │   └── BiImplies.v
+│   │
+│   ├── Modular/
+│   │   ├── ModMParametric.v
+│   │   ├── Mod2.v
+│   │   ├── Mod3.v
+│   │   ├── Mod4.v
+│   │   ├── Mod5.v
+│   │   ├── Mod6.v
+│   │   ├── Mod7.v
+│   │   ├── Mod8.v
+│   │   ├── Mod9.v
+│   │   ├── Mod10.v
+│   │   ├── Mod11.v
+│   │   └── Mod12.v
+│   │
+│   ├── Threshold/
+│   │   ├── Majority.v
+│   │   ├── Minority.v
+│   │   ├── KOutOfN.v
+│   │   ├── OneOutOfEight.v
+│   │   ├── TwoOutOfEight.v
+│   │   ├── ThreeOutOfEight.v
+│   │   ├── FourOutOfEight.v
+│   │   ├── FiveOutOfEight.v
+│   │   ├── SixOutOfEight.v
+│   │   ├── SevenOutOfEight.v
+│   │   ├── AllOutOfEight.v
+│   │   ├── AtLeastK.v
+│   │   ├── AtMostK.v
+│   │   └── ExactlyK.v
+│   │
+│   ├── Arithmetic/
+│   │   ├── HalfAdder.v
+│   │   ├── FullAdder.v
+│   │   ├── RippleCarry2Bit.v
+│   │   ├── RippleCarry4Bit.v
+│   │   ├── RippleCarry8Bit.v
+│   │   ├── Incrementer8Bit.v
+│   │   ├── Decrementer8Bit.v
+│   │   ├── Multiplier2x2.v
+│   │   ├── Multiplier4x4.v
+│   │   ├── Equality8Bit.v
+│   │   ├── GreaterThan8Bit.v
+│   │   ├── LessThan8Bit.v
+│   │   ├── GreaterOrEqual8Bit.v
+│   │   ├── LessOrEqual8Bit.v
+│   │   ├── Max8Bit.v
+│   │   ├── Min8Bit.v
+│   │   └── AbsoluteDifference8Bit.v
+│   │
+│   ├── ErrorDetection/
+│   │   ├── ParityChecker8Bit.v
+│   │   ├── ParityGenerator8Bit.v
+│   │   ├── EvenParityChecker.v
+│   │   ├── OddParityChecker.v
+│   │   ├── Checksum8Bit.v
+│   │   ├── HammingEncode4Bit.v
+│   │   ├── HammingDecode7Bit.v
+│   │   ├── HammingSyndrome.v
+│   │   ├── CRC4.v
+│   │   ├── CRC8.v
+│   │   └── LongitudinalParity.v
+│   │
+│   ├── PatternRecognition/
+│   │   ├── HammingDistance8Bit.v
+│   │   ├── AllOnes.v
+│   │   ├── AllZeros.v
+│   │   ├── LeadingOnes.v
+│   │   ├── TrailingOnes.v
+│   │   ├── Symmetry8Bit.v
+│   │   ├── Alternating8Bit.v
+│   │   ├── RunLength.v
+│   │   ├── PopCount.v
+│   │   └── OneHotDetector.v
+│   │
+│   ├── Combinational/
+│   │   ├── Multiplexer2to1.v
+│   │   ├── Multiplexer4to1.v
+│   │   ├── Multiplexer8to1.v
+│   │   ├── Demultiplexer1to2.v
+│   │   ├── Demultiplexer1to4.v
+│   │   ├── Demultiplexer1to8.v
+│   │   ├── Encoder8to3.v
+│   │   ├── Decoder3to8.v
+│   │   ├── PriorityEncoder8Bit.v
+│   │   └── BarrelShifter8Bit.v
+│   │
+│   └── Extraction/
+│       ├── ExtractModular.v
+│       ├── ExtractBoolean.v
+│       ├── ExtractThreshold.v
+│       ├── ExtractArithmetic.v
+│       ├── ExtractErrorDetection.v
+│       ├── ExtractPatternRecognition.v
+│       └── ExtractCombinational.v
 ```
+
+**Total: 82 circuits across 7 categories**
 
 ## Workflow
 
