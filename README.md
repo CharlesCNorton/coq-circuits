@@ -4,7 +4,7 @@ Formally verified threshold logic circuits with axiom-free Coq proofs.
 
 ## Status
 
-**Progress**: 27/82 circuits complete (32.9%)
+**Progress**: 40/82 circuits complete (48.8%)
 
 Unifying existing repos:
 - [majority-verified](https://github.com/CharlesCNorton/majority-verified)
@@ -245,15 +245,39 @@ Items 1-5 complete
 
 **Sanity Test 1**: Compose NAND gates to build AND
 
-### Phase 3: Threshold Functions (Items 15-28)
-Majority, minority, k-out-of-n variants
+### Phase 3: Threshold Functions (Items 15-28) ✓
+- [x] 15. Majority.v
+- [x] 16. Minority.v
+- [x] 17. KOutOfN.v (parametric)
+- [x] 18. OneOutOfEight.v
+- [x] 19. TwoOutOfEight.v
+- [x] 20. ThreeOutOfEight.v
+- [x] 21. FourOutOfEight.v
+- [x] 22. FiveOutOfEight.v
+- [x] 23. SixOutOfEight.v
+- [x] 24. SevenOutOfEight.v
+- [x] 25. AllOutOfEight.v
+- [x] 26. AtLeastK.v (parametric)
+- [x] 27. AtMostK.v (parametric)
+- [x] 28. ExactlyK.v (parametric)
 
-**Sanity Test 2**: Verify Majority = FiveOutOfEight = AtLeastK(5)
+**Sanity Test 2**: Verify Majority = FiveOutOfEight = AtLeastK(5) ✓
 
-### Phase 4: Modular Arithmetic (Items 29-40)
-MOD-m parametric proof + instances through MOD-12
+### Phase 4: Modular Arithmetic (Items 29-40) ✓
+- [x] 29. ModMParametric.v
+- [x] 30. Mod2.v
+- [x] 31. Mod3.v
+- [x] 32. Mod4.v
+- [x] 33. Mod5.v
+- [x] 34. Mod6.v
+- [x] 35. Mod7.v
+- [x] 36. Mod8.v
+- [x] 37. Mod9.v
+- [x] 38. Mod10.v
+- [x] 39. Mod11.v
+- [x] 40. Mod12.v
 
-**Sanity Test 3**: Verify MOD-2 = XOR = Parity
+**Sanity Test 3**: Verify MOD-2 = XOR = Parity ✓
 
 ### Phases 5-25
 Arithmetic, error detection, pattern recognition, combinational logic, OCaml extraction, weight generation, HuggingFace publishing, integration testing.
