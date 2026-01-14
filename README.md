@@ -2,124 +2,153 @@
 
 Formally verified threshold logic circuits with axiom-free Coq proofs.
 
-## Status: Repository Unification in Progress
+## Status
 
-This repository is being prepared to unify the following verified circuits:
-- [majority-verified](https://github.com/CharlesCNorton/majority-verified) - Single-gate majority threshold circuit
-- [mod3-verified](https://github.com/CharlesCNorton/mod3-verified) - First MOD-3 threshold circuit
-- [mod5-verified](https://github.com/CharlesCNorton/mod5-verified) - MOD-5 threshold circuit
-- [mod7-verified](https://github.com/CharlesCNorton/mod7-verified) - MOD-7 threshold circuit
-- [modm-verified](https://github.com/CharlesCNorton/modm-verified) - Parametric MOD-m proof for any m ≥ 2
+**Progress**: 6/82 circuits complete (7.3%)
 
-Weights for all circuits are available on [HuggingFace](https://huggingface.co/phanerozoic).
+Unifying existing repos:
+- [majority-verified](https://github.com/CharlesCNorton/majority-verified)
+- [mod3-verified](https://github.com/CharlesCNorton/mod3-verified)
+- [mod5-verified](https://github.com/CharlesCNorton/mod5-verified)
+- [mod7-verified](https://github.com/CharlesCNorton/mod7-verified)
+- [modm-verified](https://github.com/CharlesCNorton/modm-verified)
+
+Weights: [HuggingFace/phanerozoic](https://huggingface.co/phanerozoic)
 
 ## Overview
 
-Formally verified threshold logic circuits built using algebraically-constructed weight functions, proven correct in Coq/Rocq. All circuits use Heaviside step activation and are compatible with neuromorphic hardware (Loihi, TrueNorth, Akida).
+Threshold logic circuits built using algebraically-constructed weight functions. All circuits use Heaviside step activation and are compatible with neuromorphic hardware (Loihi, TrueNorth, Akida).
 
-## Circuit Categories
+### Circuit Categories (82 total)
 
-### Modular Arithmetic (12 circuits)
-MOD-2 through MOD-12 with parametric proof covering any m ≥ 2.
+- **Modular Arithmetic**: MOD-2 through MOD-12 (12 circuits)
+- **Boolean Logic**: AND, OR, NAND, NOR, XOR, XNOR, NOT, Implies, BiImplies (9 circuits)
+- **Threshold Functions**: Majority, k-out-of-n variants (13 circuits)
+- **Arithmetic**: Adders, multipliers, comparators (17 circuits)
+- **Error Detection**: Parity, Hamming codes, CRC (11 circuits)
+- **Pattern Recognition**: Hamming distance, symmetry (10 circuits)
+- **Combinational Logic**: Muxes, encoders, decoders (10 circuits)
 
-### Boolean Logic (9 circuits)
-AND, OR, NAND, NOR, XOR, XNOR, NOT, Implies, BiImplies.
-
-### Threshold Functions (13 circuits)
-Majority, minority, k-out-of-n, at-least-k, at-most-k, exactly-k variants.
-
-### Arithmetic Circuits (17 circuits)
-Adders, multipliers, comparators, incrementers, decrementers.
-
-### Error Detection (11 circuits)
-Parity checkers, Hamming codes, CRC, checksums.
-
-### Pattern Recognition (10 circuits)
-Hamming distance, symmetry detection, run-length encoding, one-hot detection.
-
-### Combinational Logic (10 circuits)
-Multiplexers, demultiplexers, encoders, decoders, barrel shifters.
-
-**Total: 82 verified threshold logic circuits**
-
-## Verification Methodology
+### Verification
 
 All circuits proven correct using three independent methods:
+1. **Exhaustive**: `vm_compute` over all inputs
+2. **Constructive**: Universal quantifier proofs
+3. **Algebraic**: Mathematical correctness proofs
 
-1. **Exhaustive Verification** - `vm_compute` over all inputs
-2. **Constructive Verification** - Universal quantifier proofs
-3. **Algebraic Verification** - Mathematical correctness proofs
-
-All proofs are axiom-free.
+All proofs axiom-free.
 
 ## Repository Structure
 
 ```
 coq-circuits/
-├── coq/                    # Coq proof files
-│   ├── Base/              # Shared definitions and tactics
-│   ├── Modular/           # MOD-m circuits
+├── coq/
+│   ├── Base/              # Core definitions, tactics, verification
 │   ├── Boolean/           # Boolean logic gates
+│   ├── Modular/           # MOD-m circuits
 │   ├── Threshold/         # Threshold functions
 │   ├── Arithmetic/        # Arithmetic circuits
-│   ├── ErrorDetection/    # Error detection circuits
-│   ├── PatternRecognition/# Pattern recognition circuits
-│   ├── Combinational/     # Combinational logic
-│   └── Extraction/        # OCaml extraction modules
-├── extracted/             # Extracted OCaml code
-├── weights/               # Verified weights (.safetensors)
-├── ocaml/                 # OCaml build configuration
-├── docs/                  # Documentation
-├── examples/              # Usage examples
-└── scripts/               # Build and automation scripts
+│   ├── ErrorDetection/    # Error detection
+│   ├── PatternRecognition/# Pattern recognition
+│   └── Combinational/     # Combinational logic
+├── LICENSE
+└── README.md
 ```
 
 ## Workflow
 
 ### 1. Define Circuit in Coq
-Write formal definition with weight functions.
+```coq
+Definition circuit_weights : list Z := [...].
+Definition circuit_bias : Z := ...
+Definition circuit (xs : list bool) : bool := gate circuit_weights circuit_bias xs.
+```
 
 ### 2. Prove Correctness
-Provide exhaustive, constructive, and algebraic proofs.
+```coq
+Theorem circuit_correct : forall x0 ... x7,
+  circuit [x0;...;x7] = specification [x0;...;x7].
+Proof. intros. destruct x0,...,x7; reflexivity. Qed.
 
-### 3. Extract to OCaml
-Generate executable code via Coq extraction.
+Print Assumptions circuit_correct.  (* Must be axiom-free *)
+```
 
-### 4. Generate Weights
-Export weights to `.safetensors` format.
+### 3. Generate Weights
+Extract weight values to `.safetensors` format.
+
+### 4. Test Weights
+Load `.safetensors` and verify inference matches Coq proof on all inputs.
 
 ### 5. Upload to HuggingFace
-Publish verified weights and model cards.
+Publish to `phanerozoic/tiny-[CIRCUIT]-prover` with model card.
+
+## Naming Conventions
+
+- **Coq files**: PascalCase (`Boolean/NOT.v`, `Arithmetic/HalfAdder.v`)
+- **HuggingFace**: `phanerozoic/tiny-[CIRCUIT]-prover`
+- **Weights**: Local only, uploaded to HF (not in repo)
 
 ## Building
 
 ```bash
-# Compile all Coq proofs
-./scripts/build_all_coq.sh
-
-# Extract OCaml code
-./scripts/extract_all_ocaml.sh
-
-# Generate weights
-./scripts/generate_all_weights.sh
-
-# Verify all proofs are axiom-free
-./scripts/verify_all_proofs.sh
+cd coq-circuits/coq
+coqc -R . "" Base/Definitions.v
+coqc -R . "" Boolean/NOT.v
+# etc.
 ```
 
-## Usage
+## Completed Circuits
 
-See `examples/` directory for inference examples using extracted OCaml code.
+### Base Library (5/5)
+- [x] Base/Definitions.v
+- [x] Base/Tactics.v
+- [x] Base/WeightPatterns.v
+- [x] Base/Verification.v
+- [x] Base/Composition.v
 
-## HuggingFace Models
+### Boolean Logic (1/9)
+- [x] Boolean/NOT.v → [tiny-NOT-prover](https://huggingface.co/phanerozoic/tiny-NOT-prover)
+- [ ] Boolean/AND.v
+- [ ] Boolean/OR.v
+- [ ] Boolean/NAND.v
+- [ ] Boolean/NOR.v
+- [ ] Boolean/XOR.v
+- [ ] Boolean/XNOR.v
+- [ ] Boolean/Implies.v
+- [ ] Boolean/BiImplies.v
 
-All verified weights available at:
-- [phanerozoic/tiny-mod2-prover](https://huggingface.co/phanerozoic/tiny-parity-prover)
-- [phanerozoic/tiny-mod3-prover](https://huggingface.co/phanerozoic/tiny-mod3-prover)
-- [phanerozoic/tiny-mod5-prover](https://huggingface.co/phanerozoic/tiny-mod5-prover)
-- [phanerozoic/tiny-mod7-prover](https://huggingface.co/phanerozoic/tiny-mod7-prover)
+## Development Checklist
 
-Additional circuits will be published as they are completed.
+### Phase 1: Base Library ✓
+Items 1-5 complete
+
+### Phase 2: Boolean Logic (Items 6-14)
+- [x] 6. NOT.v
+- [ ] 7. AND.v ← **Current**
+- [ ] 8. OR.v
+- [ ] 9. NAND.v
+- [ ] 10. NOR.v
+- [ ] 11. XOR.v
+- [ ] 12. XNOR.v
+- [ ] 13. Implies.v
+- [ ] 14. BiImplies.v
+
+**Sanity Test 1**: Compose NAND gates to build AND
+
+### Phase 3: Threshold Functions (Items 15-28)
+Majority, minority, k-out-of-n variants
+
+**Sanity Test 2**: Verify Majority = FiveOutOfEight = AtLeastK(5)
+
+### Phase 4: Modular Arithmetic (Items 29-40)
+MOD-m parametric proof + instances through MOD-12
+
+**Sanity Test 3**: Verify MOD-2 = XOR = Parity
+
+### Phases 5-25
+Arithmetic, error detection, pattern recognition, combinational logic, OCaml extraction, weight generation, HuggingFace publishing, integration testing.
+
+Total: 132 items
 
 ## License
 
