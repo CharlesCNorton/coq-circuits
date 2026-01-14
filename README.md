@@ -4,7 +4,7 @@ Formally verified threshold logic circuits with axiom-free Coq proofs.
 
 ## Status
 
-**Progress**: 14/82 circuits complete (17.1%)
+**Progress**: 27/82 circuits complete (32.9%)
 
 Unifying existing repos:
 - [majority-verified](https://github.com/CharlesCNorton/majority-verified)
