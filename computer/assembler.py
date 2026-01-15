@@ -249,10 +249,29 @@ class NeuralComputer:
         if immediate & 0x20:
             immediate |= 0xC0
 
-        if opcode == 14:  # JMP - unconditional jump
+        if opcode == 14:  # Control flow - condition in bits 11-8
+            cond = (instruction >> 8) & 0xF
             target = instruction & 0xFF
-            self.pc = target
-            return
+            take_branch = False
+            if cond == 0:    # JMP - unconditional
+                take_branch = True
+            elif cond == 1:  # JZ - jump if zero
+                take_branch = self.flags["Z"] == 1
+            elif cond == 2:  # JNZ - jump if not zero
+                take_branch = self.flags["Z"] == 0
+            elif cond == 3:  # JC - jump if carry
+                take_branch = self.flags["C"] == 1
+            elif cond == 4:  # JNC - jump if not carry
+                take_branch = self.flags["C"] == 0
+            elif cond == 5:  # JN - jump if negative
+                take_branch = self.flags["N"] == 1
+            elif cond == 6:  # JP - jump if positive
+                take_branch = self.flags["N"] == 0
+            elif cond == 7:  # JV - jump if overflow
+                take_branch = self.flags["V"] == 1
+            if take_branch:
+                self.pc = target
+                return
         elif opcode == 13:  # LDI - bypass ALU, load immediate (unsigned 6-bit)
             val = instruction & 0x3F
             self.registers[dest] = val
