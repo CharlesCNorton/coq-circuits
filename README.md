@@ -4,7 +4,7 @@ Formally verified threshold logic circuits with axiom-free Coq proofs.
 
 ## Status
 
-**Progress**: 70/82 circuits complete (85.4%)
+**Progress**: 71/82 circuits complete (86.6%)
 
 **Uploaded to HuggingFace**: 31 models
 
@@ -123,7 +123,7 @@ coq-circuits/
 │   │   ├── ParityGenerator8Bit.v ✓
 │   │   ├── EvenParityChecker.v   ✓
 │   │   ├── OddParityChecker.v    ✓
-│   │   ├── Checksum8Bit.v
+│   │   ├── Checksum8Bit.v        ✓
 │   │   ├── HammingEncode4Bit.v
 │   │   ├── HammingDecode7Bit.v
 │   │   ├── HammingSyndrome.v
