@@ -4,7 +4,7 @@ Formally verified threshold logic circuits with axiom-free Coq proofs.
 
 ## Status
 
-**Progress**: 81/82 circuits complete (98.8%)
+**Progress**: 86/87 circuits complete (98.9%)
 
 **Uploaded to HuggingFace**: 31 models
 
@@ -130,11 +130,11 @@ coq-circuits/
 │   │   ├── OddParityChecker.v    ✓
 │   │   ├── Checksum8Bit.v        ✓
 │   │   ├── HammingEncode4Bit.v   ✓
-│   │   ├── HammingDecode7Bit.v
-│   │   ├── HammingSyndrome.v
-│   │   ├── CRC4.v
-│   │   ├── CRC8.v
-│   │   ├── LongitudinalParity.v
+│   │   ├── HammingDecode7Bit.v   ✓
+│   │   ├── HammingSyndrome.v     ✓
+│   │   ├── CRC4.v                ✓
+│   │   ├── CRC8.v                ✓
+│   │   ├── LongitudinalParity.v  ✓
 │   │   └── SanityTest10.v        ✓
 │   │
 │   ├── Pattern/
@@ -376,18 +376,18 @@ Items 1-5 complete
 
 **Sanity Test 4**: Verify RippleCarry8Bit = composition of FullAdders
 
-### Phase 6: Error Detection (Items 58-68)
+### Phase 6: Error Detection (Items 58-68) ✓
 - [x] 58. ParityChecker8Bit.v
 - [x] 59. ParityGenerator8Bit.v
 - [x] 60. EvenParityChecker.v
 - [x] 61. OddParityChecker.v
 - [x] 62. Checksum8Bit.v
 - [x] 63. HammingEncode4Bit.v
-- [ ] 64. HammingDecode7Bit.v
-- [ ] 65. HammingSyndrome.v
-- [ ] 66. CRC4.v
-- [ ] 67. CRC8.v
-- [ ] 68. LongitudinalParity.v
+- [x] 64. HammingDecode7Bit.v
+- [x] 65. HammingSyndrome.v
+- [x] 66. CRC4.v
+- [x] 67. CRC8.v
+- [x] 68. LongitudinalParity.v
 
 **Sanity Test 10**: EvenParity = NOT(OddParity)
 **Sanity Test 11**: ParityGenerator8Bit = MOD-2 residue 1
@@ -426,9 +426,8 @@ Items 1-5 complete
 **Sanity Test 19**: Decoder3to8 ∘ Encoder8to3 = identity (on valid inputs)
 
 ### Remaining Work
-- Phase 9: Error Detection (5 remaining: HammingDecode, HammingSyndrome, CRC4, CRC8, LongitudinalParity)
-- Phase 10: Extraction modules
-- Phase 11: Weight generation and HuggingFace uploads
+- Phase 9: Extraction modules (7 modules)
+- Phase 10: Weight generation and HuggingFace uploads
 
 ## Sanity Test Summary
 
