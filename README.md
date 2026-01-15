@@ -4,7 +4,7 @@ Formally verified threshold logic circuits with axiom-free Coq proofs.
 
 ## Status
 
-**Progress**: 52/82 circuits complete (63.4%)
+**Progress**: 70/82 circuits complete (85.4%)
 
 **Uploaded to HuggingFace**: 31 models
 
@@ -120,9 +120,9 @@ coq-circuits/
 │   │
 │   ├── Error/
 │   │   ├── ParityChecker8Bit.v   ✓
-│   │   ├── ParityGenerator8Bit.v
-│   │   ├── EvenParityChecker.v
-│   │   ├── OddParityChecker.v
+│   │   ├── ParityGenerator8Bit.v ✓
+│   │   ├── EvenParityChecker.v   ✓
+│   │   ├── OddParityChecker.v    ✓
 │   │   ├── Checksum8Bit.v
 │   │   ├── HammingEncode4Bit.v
 │   │   ├── HammingDecode7Bit.v
@@ -132,28 +132,28 @@ coq-circuits/
 │   │   └── LongitudinalParity.v
 │   │
 │   ├── Pattern/
-│   │   ├── HammingDistance8Bit.v
+│   │   ├── HammingDistance8Bit.v ✓
 │   │   ├── AllOnes.v             ✓
 │   │   ├── AllZeros.v            ✓
-│   │   ├── LeadingOnes.v
-│   │   ├── TrailingOnes.v
-│   │   ├── Symmetry8Bit.v
-│   │   ├── Alternating8Bit.v
-│   │   ├── RunLength.v
-│   │   ├── PopCount.v
+│   │   ├── LeadingOnes.v         ✓
+│   │   ├── TrailingOnes.v        ✓
+│   │   ├── Symmetry8Bit.v        ✓
+│   │   ├── Alternating8Bit.v     ✓
+│   │   ├── RunLength.v           ✓
+│   │   ├── PopCount.v            ✓
 │   │   └── OneHotDetector.v      ✓
 │   │
 │   ├── Combinational/
 │   │   ├── Multiplexer2to1.v     ✓
 │   │   ├── Multiplexer4to1.v     ✓
-│   │   ├── Multiplexer8to1.v
-│   │   ├── Demultiplexer1to2.v
-│   │   ├── Demultiplexer1to4.v
-│   │   ├── Demultiplexer1to8.v
-│   │   ├── Encoder8to3.v
-│   │   ├── Decoder3to8.v
-│   │   ├── PriorityEncoder8Bit.v
-│   │   └── BarrelShifter8Bit.v
+│   │   ├── Multiplexer8to1.v     ✓
+│   │   ├── Demultiplexer1to2.v   ✓
+│   │   ├── Demultiplexer1to4.v   ✓
+│   │   ├── Demultiplexer1to8.v   ✓
+│   │   ├── Encoder8to3.v         ✓
+│   │   ├── Decoder3to8.v         ✓
+│   │   ├── PriorityEncoder8Bit.v ✓
+│   │   └── BarrelShifter8Bit.v   ✓
 │   │
 │   └── Extraction/
 │       ├── ExtractModular.v
@@ -365,9 +365,9 @@ Items 1-5 complete
 
 ### Phase 6: Error Detection (Items 58-68)
 - [x] 58. ParityChecker8Bit.v
-- [ ] 59. ParityGenerator8Bit.v
-- [ ] 60. EvenParityChecker.v
-- [ ] 61. OddParityChecker.v
+- [x] 59. ParityGenerator8Bit.v
+- [x] 60. EvenParityChecker.v
+- [x] 61. OddParityChecker.v
 - [ ] 62. Checksum8Bit.v
 - [ ] 63. HammingEncode4Bit.v
 - [ ] 64. HammingDecode7Bit.v
