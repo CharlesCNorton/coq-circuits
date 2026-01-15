@@ -4,7 +4,7 @@ Formally verified threshold logic circuits with axiom-free Coq proofs.
 
 ## Status
 
-**Progress**: 86/87 circuits complete (98.9%)
+**Progress**: 86/89 circuits complete (96.6%) — ALU planned
 
 **Uploaded to HuggingFace**: 31 models
 
@@ -21,15 +21,16 @@ Weights: [HuggingFace/phanerozoic](https://huggingface.co/phanerozoic)
 
 Threshold logic circuits built using algebraically-constructed weight functions. All circuits use Heaviside step activation and are compatible with neuromorphic hardware (Loihi, TrueNorth, Akida).
 
-### Circuit Categories (82 total)
+### Circuit Categories (89 total)
 
 - **Modular Arithmetic**: MOD-2 through MOD-12 (12 circuits)
 - **Boolean Logic**: AND, OR, NAND, NOR, XOR, XNOR, NOT, Implies, BiImplies (9 circuits)
-- **Threshold Functions**: Majority, k-out-of-n variants (13 circuits)
+- **Threshold Functions**: Majority, k-out-of-n variants (14 circuits)
 - **Arithmetic**: Adders, multipliers, comparators (17 circuits)
 - **Error**: Parity, Hamming codes, CRC (11 circuits)
 - **Pattern**: Hamming distance, symmetry, detectors (10 circuits)
 - **Combinational Logic**: Muxes, encoders, decoders (10 circuits)
+- **ALU**: 8-bit ALU with control and flags (3 circuits, planned)
 
 ### Verification
 
@@ -168,6 +169,11 @@ coq-circuits/
 │   │   ├── SanityTest18.v        ✓
 │   │   └── SanityTest19.v        ✓
 │   │
+│   ├── ALU/
+│   │   ├── ALU8Bit.v             (planned - 8-bit ALU combining arithmetic/logic ops)
+│   │   ├── ALUControl.v          (planned - opcode decoder for ALU operations)
+│   │   └── ALUFlags.v            (planned - zero/carry/overflow/negative flags)
+│   │
 │   └── Extraction/
 │       ├── ExtractModular.v
 │       ├── ExtractBoolean.v
@@ -178,7 +184,7 @@ coq-circuits/
 │       └── ExtractCombinational.v
 ```
 
-**Total: 82 circuits across 7 categories**
+**Total: 86 circuits complete, 3 planned (ALU) across 8 categories**
 
 ## Workflow
 
@@ -426,8 +432,9 @@ Items 1-5 complete
 **Sanity Test 19**: Decoder3to8 ∘ Encoder8to3 = identity (on valid inputs)
 
 ### Remaining Work
-- Phase 9: Extraction modules (7 modules)
-- Phase 10: Weight generation and HuggingFace uploads
+- Phase 9: ALU (3 circuits: ALU8Bit, ALUControl, ALUFlags)
+- Phase 10: Extraction modules (7 modules)
+- Phase 11: Weight generation and HuggingFace uploads
 
 ## Sanity Test Summary
 
