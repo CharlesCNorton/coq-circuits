@@ -4,7 +4,7 @@ Formally verified threshold logic circuits with axiom-free Coq proofs.
 
 ## Status
 
-**Progress**: 71/82 circuits complete (86.6%)
+**Progress**: 81/82 circuits complete (98.8%)
 
 **Uploaded to HuggingFace**: 31 models
 
@@ -110,16 +110,16 @@ coq-circuits/
 │   │   ├── RippleCarry8Bit.v     ✓
 │   │   ├── Incrementer8Bit.v     ✓
 │   │   ├── Decrementer8Bit.v     ✓
-│   │   ├── Multiplier2x2.v
-│   │   ├── Multiplier4x4.v
+│   │   ├── Multiplier2x2.v       ✓
+│   │   ├── Multiplier4x4.v       ✓
 │   │   ├── Equality8Bit.v        ✓
-│   │   ├── GreaterThan8Bit.v
-│   │   ├── LessThan8Bit.v
-│   │   ├── GreaterOrEqual8Bit.v
-│   │   ├── LessOrEqual8Bit.v
-│   │   ├── Max8Bit.v
-│   │   ├── Min8Bit.v
-│   │   ├── AbsoluteDifference8Bit.v
+│   │   ├── GreaterThan8Bit.v     ✓
+│   │   ├── LessThan8Bit.v        ✓
+│   │   ├── GreaterOrEqual8Bit.v  ✓
+│   │   ├── LessOrEqual8Bit.v     ✓
+│   │   ├── Max8Bit.v             ✓
+│   │   ├── Min8Bit.v             ✓
+│   │   ├── AbsoluteDifference8Bit.v ✓
 │   │   ├── SanityTest13.v        ✓
 │   │   └── SanityTest17.v        ✓
 │   │
@@ -129,7 +129,7 @@ coq-circuits/
 │   │   ├── EvenParityChecker.v   ✓
 │   │   ├── OddParityChecker.v    ✓
 │   │   ├── Checksum8Bit.v        ✓
-│   │   ├── HammingEncode4Bit.v
+│   │   ├── HammingEncode4Bit.v   ✓
 │   │   ├── HammingDecode7Bit.v
 │   │   ├── HammingSyndrome.v
 │   │   ├── CRC4.v
@@ -355,7 +355,7 @@ Items 1-5 complete
 
 **Sanity Test 3**: Verify MOD-2 = XOR = Parity ✓
 
-### Phase 5: Arithmetic (Items 41-57)
+### Phase 5: Arithmetic (Items 41-57) ✓
 - [x] 41. HalfAdder.v
 - [x] 42. FullAdder.v
 - [x] 43. RippleCarry2Bit.v
@@ -363,16 +363,16 @@ Items 1-5 complete
 - [x] 45. RippleCarry8Bit.v
 - [x] 46. Incrementer8Bit.v
 - [x] 47. Decrementer8Bit.v
-- [ ] 48. Multiplier2x2.v
-- [ ] 49. Multiplier4x4.v
+- [x] 48. Multiplier2x2.v
+- [x] 49. Multiplier4x4.v
 - [x] 50. Equality8Bit.v
-- [ ] 51. GreaterThan8Bit.v
-- [ ] 52. LessThan8Bit.v
-- [ ] 53. GreaterOrEqual8Bit.v
-- [ ] 54. LessOrEqual8Bit.v
-- [ ] 55. Max8Bit.v
-- [ ] 56. Min8Bit.v
-- [ ] 57. AbsoluteDifference8Bit.v
+- [x] 51. GreaterThan8Bit.v
+- [x] 52. LessThan8Bit.v
+- [x] 53. GreaterOrEqual8Bit.v
+- [x] 54. LessOrEqual8Bit.v
+- [x] 55. Max8Bit.v
+- [x] 56. Min8Bit.v
+- [x] 57. AbsoluteDifference8Bit.v
 
 **Sanity Test 4**: Verify RippleCarry8Bit = composition of FullAdders
 
@@ -381,8 +381,8 @@ Items 1-5 complete
 - [x] 59. ParityGenerator8Bit.v
 - [x] 60. EvenParityChecker.v
 - [x] 61. OddParityChecker.v
-- [ ] 62. Checksum8Bit.v
-- [ ] 63. HammingEncode4Bit.v
+- [x] 62. Checksum8Bit.v
+- [x] 63. HammingEncode4Bit.v
 - [ ] 64. HammingDecode7Bit.v
 - [ ] 65. HammingSyndrome.v
 - [ ] 66. CRC4.v
@@ -392,16 +392,16 @@ Items 1-5 complete
 **Sanity Test 10**: EvenParity = NOT(OddParity)
 **Sanity Test 11**: ParityGenerator8Bit = MOD-2 residue 1
 
-### Phase 7: Pattern Recognition (Items 69-78)
-- [ ] 69. HammingDistance8Bit.v
+### Phase 7: Pattern Recognition (Items 69-78) ✓
+- [x] 69. HammingDistance8Bit.v
 - [x] 70. AllOnes.v
 - [x] 71. AllZeros.v
-- [ ] 72. LeadingOnes.v
-- [ ] 73. TrailingOnes.v
-- [ ] 74. Symmetry8Bit.v
-- [ ] 75. Alternating8Bit.v
-- [ ] 76. RunLength.v
-- [ ] 77. PopCount.v
+- [x] 72. LeadingOnes.v
+- [x] 73. TrailingOnes.v
+- [x] 74. Symmetry8Bit.v
+- [x] 75. Alternating8Bit.v
+- [x] 76. RunLength.v
+- [x] 77. PopCount.v
 - [x] 78. OneHotDetector.v
 
 **Sanity Test 6**: AllOnes = AllOutOfEight (8-of-8 threshold)
@@ -410,26 +410,25 @@ Items 1-5 complete
 **Sanity Test 9**: OneHotDetector = ExactlyK(1)
 **Sanity Test 12**: HammingDistance(A,B) = PopCount(XOR(A,B))
 
-### Phase 8: Combinational Logic (Items 79-88)
+### Phase 8: Combinational Logic (Items 79-88) ✓
 - [x] 79. Multiplexer2to1.v
 - [x] 80. Multiplexer4to1.v
-- [ ] 81. Multiplexer8to1.v
-- [ ] 82. Demultiplexer1to2.v
-- [ ] 83. Demultiplexer1to4.v
-- [ ] 84. Demultiplexer1to8.v
-- [ ] 85. Encoder8to3.v
-- [ ] 86. Decoder3to8.v
-- [ ] 87. PriorityEncoder8Bit.v
-- [ ] 88. BarrelShifter8Bit.v
+- [x] 81. Multiplexer8to1.v
+- [x] 82. Demultiplexer1to2.v
+- [x] 83. Demultiplexer1to4.v
+- [x] 84. Demultiplexer1to8.v
+- [x] 85. Encoder8to3.v
+- [x] 86. Decoder3to8.v
+- [x] 87. PriorityEncoder8Bit.v
+- [x] 88. BarrelShifter8Bit.v
 
 **Sanity Test 18**: Mux2to1(s,a,b) = OR(AND(NOT(s),a), AND(s,b))
 **Sanity Test 19**: Decoder3to8 ∘ Encoder8to3 = identity (on valid inputs)
 
-### Remaining Phases
-- Phase 9: Comparators (GreaterThan, LessThan, etc.)
-- Phase 10: Min/Max/AbsDiff
-- Phase 11: Multipliers
-- Phase 12-20: Extraction, weights, HuggingFace, integration
+### Remaining Work
+- Phase 9: Error Detection (5 remaining: HammingDecode, HammingSyndrome, CRC4, CRC8, LongitudinalParity)
+- Phase 10: Extraction modules
+- Phase 11: Weight generation and HuggingFace uploads
 
 ## Sanity Test Summary
 
@@ -448,9 +447,9 @@ Items 1-5 complete
 | ST11 | ParityGenerator = MOD-2 residue 1 | Pending |
 | ST12 | HammingDistance(A,B) = PopCount(XOR(A,B)) | ✓ Done |
 | ST13 | Equality8Bit = AND(XNOR(a_i,b_i)...) | ✓ Done |
-| ST14 | GreaterThan = NOT(LessOrEqual) | Pending |
-| ST15 | LessThan = NOT(GreaterOrEqual) | Pending |
-| ST16 | Max(A,B) = IF GT(A,B) THEN A ELSE B | Pending |
+| ST14 | GreaterThan = NOT(LessOrEqual) | ✓ Done |
+| ST15 | LessThan = NOT(GreaterOrEqual) | ✓ Done |
+| ST16 | Max(A,B) = IF GE(A,B) THEN A ELSE B | ✓ Done |
 | ST17 | Incrementer = RippleCarry(A, 0x01) | ✓ Done |
 | ST18 | Mux2to1 = OR(AND(NOT(s),a), AND(s,b)) | ✓ Done |
 | ST19 | Decoder ∘ Encoder = identity | ✓ Done |
