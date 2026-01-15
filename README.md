@@ -1,19 +1,11 @@
 # Coq Circuits
 
-Formally verified threshold logic circuits with axiom-free Coq proofs.
+Threshold logic circuits with Coq proofs. Building toward a complete threshold logic computer.
 
 ## Status
 
-**Progress**: 89/89 circuits complete (100%)
-
-**Uploaded to HuggingFace**: 31 models
-
-Unifying existing repos:
-- [majority-verified](https://github.com/CharlesCNorton/majority-verified)
-- [mod3-verified](https://github.com/CharlesCNorton/mod3-verified)
-- [mod5-verified](https://github.com/CharlesCNorton/mod5-verified)
-- [mod7-verified](https://github.com/CharlesCNorton/mod7-verified)
-- [modm-verified](https://github.com/CharlesCNorton/modm-verified)
+**Circuits**: 89/89 complete (100%)
+**Computer**: 8-bit ALU operational, control flow planned
 
 Weights: [HuggingFace/phanerozoic](https://huggingface.co/phanerozoic)
 
@@ -21,7 +13,12 @@ Weights: [HuggingFace/phanerozoic](https://huggingface.co/phanerozoic)
 
 Threshold logic circuits built using algebraically-constructed weight functions. All circuits use Heaviside step activation and are compatible with neuromorphic hardware (Loihi, TrueNorth, Akida).
 
-### Circuit Categories (89 total)
+```
+output = 1  if  sum(weight * input) + bias >= 0
+output = 0  otherwise
+```
+
+### Circuit Categories (89 complete)
 
 - **Modular Arithmetic**: MOD-2 through MOD-12 (12 circuits) ✓
 - **Boolean Logic**: AND, OR, NAND, NOR, XOR, XNOR, NOT, Implies, BiImplies (9 circuits) ✓
@@ -31,6 +28,21 @@ Threshold logic circuits built using algebraically-constructed weight functions.
 - **Pattern**: Hamming distance, symmetry, detectors (10 circuits) ✓
 - **Combinational Logic**: Muxes, encoders, decoders (10 circuits) ✓
 - **ALU**: 8-bit ALU with control and flags (3 circuits) ✓
+
+### 8-Bit Threshold Computer
+
+| Component | Status |
+|-----------|--------|
+| Registers (R0-R3) | ✓ Complete |
+| 8-bit ALU (16 ops) | ✓ Complete |
+| Status Flags (Z,N,C,V) | ✓ Complete |
+| Assembler | ✓ Complete |
+| Control Flow (JMP, Jcc) | Planned |
+| Memory Access (LD, ST) | Planned |
+| Stack (PUSH, POP) | Planned |
+
+Current: `8bit-threshold-computer` - a programmable ALU
+Target: Turing-complete threshold logic computer
 
 ### Verification
 
