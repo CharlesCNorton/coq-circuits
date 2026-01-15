@@ -67,7 +67,9 @@ coq-circuits/
 │   │   ├── XOR.v                 ✓
 │   │   ├── XNOR.v                ✓
 │   │   ├── Implies.v             ✓
-│   │   └── BiImplies.v           ✓
+│   │   ├── BiImplies.v           ✓
+│   │   ├── SanityTest1.v         ✓
+│   │   └── SanityTest5.v         ✓
 │   │
 │   ├── Modular/
 │   │   ├── ModMParametric.v      ✓
@@ -81,7 +83,8 @@ coq-circuits/
 │   │   ├── Mod9.v                ✓
 │   │   ├── Mod10.v               ✓
 │   │   ├── Mod11.v               ✓
-│   │   └── Mod12.v               ✓
+│   │   ├── Mod12.v               ✓
+│   │   └── SanityTest3.v         ✓
 │   │
 │   ├── Threshold/
 │   │   ├── Majority.v            ✓
@@ -116,7 +119,9 @@ coq-circuits/
 │   │   ├── LessOrEqual8Bit.v
 │   │   ├── Max8Bit.v
 │   │   ├── Min8Bit.v
-│   │   └── AbsoluteDifference8Bit.v
+│   │   ├── AbsoluteDifference8Bit.v
+│   │   ├── SanityTest13.v        ✓
+│   │   └── SanityTest17.v        ✓
 │   │
 │   ├── Error/
 │   │   ├── ParityChecker8Bit.v   ✓
@@ -129,7 +134,8 @@ coq-circuits/
 │   │   ├── HammingSyndrome.v
 │   │   ├── CRC4.v
 │   │   ├── CRC8.v
-│   │   └── LongitudinalParity.v
+│   │   ├── LongitudinalParity.v
+│   │   └── SanityTest10.v        ✓
 │   │
 │   ├── Pattern/
 │   │   ├── HammingDistance8Bit.v ✓
@@ -141,7 +147,12 @@ coq-circuits/
 │   │   ├── Alternating8Bit.v     ✓
 │   │   ├── RunLength.v           ✓
 │   │   ├── PopCount.v            ✓
-│   │   └── OneHotDetector.v      ✓
+│   │   ├── OneHotDetector.v      ✓
+│   │   ├── SanityTest6.v         ✓
+│   │   ├── SanityTest7.v         ✓
+│   │   ├── SanityTest8.v         ✓
+│   │   ├── SanityTest9.v         ✓
+│   │   └── SanityTest12.v        ✓
 │   │
 │   ├── Combinational/
 │   │   ├── Multiplexer2to1.v     ✓
@@ -153,7 +164,9 @@ coq-circuits/
 │   │   ├── Encoder8to3.v         ✓
 │   │   ├── Decoder3to8.v         ✓
 │   │   ├── PriorityEncoder8Bit.v ✓
-│   │   └── BarrelShifter8Bit.v   ✓
+│   │   ├── BarrelShifter8Bit.v   ✓
+│   │   ├── SanityTest18.v        ✓
+│   │   └── SanityTest19.v        ✓
 │   │
 │   └── Extraction/
 │       ├── ExtractModular.v
@@ -422,25 +435,25 @@ Items 1-5 complete
 
 | Test | Relationship | Status |
 |------|--------------|--------|
-| ST1 | NAND ∘ NAND = AND | Pending |
+| ST1 | NAND ∘ NAND = AND | ✓ Done |
 | ST2 | Majority = FiveOutOfEight = AtLeastK(5) | ✓ Done |
 | ST3 | MOD-2 = XOR = Parity | ✓ Done |
 | ST4 | RippleCarry8Bit = 8 × FullAdder | Pending |
-| ST5 | NOR ∘ NOR = OR | Pending |
-| ST6 | AllOnes = AllOutOfEight | Pending |
-| ST7 | AllZeros = NOT(OneOutOfEight) | Pending |
-| ST8 | PopCount = hamming_weight | Pending |
-| ST9 | OneHotDetector = ExactlyK(1) | Pending |
-| ST10 | EvenParity = NOT(OddParity) | Pending |
+| ST5 | NOR ∘ NOR = OR | ✓ Done |
+| ST6 | AllOnes = AllOutOfEight | ✓ Done |
+| ST7 | AllZeros = NOT(OneOutOfEight) | ✓ Done |
+| ST8 | PopCount = hamming_weight | ✓ Done |
+| ST9 | OneHotDetector = ExactlyK(1) | ✓ Done |
+| ST10 | EvenParity = NOT(OddParity) | ✓ Done |
 | ST11 | ParityGenerator = MOD-2 residue 1 | Pending |
-| ST12 | HammingDistance(A,B) = PopCount(XOR(A,B)) | Pending |
-| ST13 | Equality8Bit = AND(XNOR(a_i,b_i)...) | Pending |
+| ST12 | HammingDistance(A,B) = PopCount(XOR(A,B)) | ✓ Done |
+| ST13 | Equality8Bit = AND(XNOR(a_i,b_i)...) | ✓ Done |
 | ST14 | GreaterThan = NOT(LessOrEqual) | Pending |
 | ST15 | LessThan = NOT(GreaterOrEqual) | Pending |
 | ST16 | Max(A,B) = IF GT(A,B) THEN A ELSE B | Pending |
-| ST17 | Incrementer = RippleCarry(A, 0x01) | Pending |
-| ST18 | Mux2to1 = OR(AND(NOT(s),a), AND(s,b)) | Pending |
-| ST19 | Decoder ∘ Encoder = identity | Pending |
+| ST17 | Incrementer = RippleCarry(A, 0x01) | ✓ Done |
+| ST18 | Mux2to1 = OR(AND(NOT(s),a), AND(s,b)) | ✓ Done |
+| ST19 | Decoder ∘ Encoder = identity | ✓ Done |
 | ST20 | CRC divisibility properties | Pending |
 
 Total: 132 items
