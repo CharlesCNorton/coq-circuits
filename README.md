@@ -4,7 +4,7 @@ Formally verified threshold logic circuits with axiom-free Coq proofs.
 
 ## Status
 
-**Progress**: 40/82 circuits complete (48.8%)
+**Progress**: 52/82 circuits complete (63.4%)
 
 **Uploaded to HuggingFace**: 31 models
 
@@ -27,8 +27,8 @@ Threshold logic circuits built using algebraically-constructed weight functions.
 - **Boolean Logic**: AND, OR, NAND, NOR, XOR, XNOR, NOT, Implies, BiImplies (9 circuits)
 - **Threshold Functions**: Majority, k-out-of-n variants (13 circuits)
 - **Arithmetic**: Adders, multipliers, comparators (17 circuits)
-- **Error Detection**: Parity, Hamming codes, CRC (11 circuits)
-- **Pattern Recognition**: Hamming distance, symmetry (10 circuits)
+- **Error**: Parity, Hamming codes, CRC (11 circuits)
+- **Pattern**: Hamming distance, symmetry, detectors (10 circuits)
 - **Combinational Logic**: Muxes, encoders, decoders (10 circuits)
 
 ### Verification
@@ -102,14 +102,14 @@ coq-circuits/
 │   ├── Arithmetic/
 │   │   ├── HalfAdder.v           ✓
 │   │   ├── FullAdder.v           ✓
-│   │   ├── RippleCarry2Bit.v
-│   │   ├── RippleCarry4Bit.v
-│   │   ├── RippleCarry8Bit.v
-│   │   ├── Incrementer8Bit.v
-│   │   ├── Decrementer8Bit.v
+│   │   ├── RippleCarry2Bit.v     ✓
+│   │   ├── RippleCarry4Bit.v     ✓
+│   │   ├── RippleCarry8Bit.v     ✓
+│   │   ├── Incrementer8Bit.v     ✓
+│   │   ├── Decrementer8Bit.v     ✓
 │   │   ├── Multiplier2x2.v
 │   │   ├── Multiplier4x4.v
-│   │   ├── Equality8Bit.v
+│   │   ├── Equality8Bit.v        ✓
 │   │   ├── GreaterThan8Bit.v
 │   │   ├── LessThan8Bit.v
 │   │   ├── GreaterOrEqual8Bit.v
@@ -118,8 +118,8 @@ coq-circuits/
 │   │   ├── Min8Bit.v
 │   │   └── AbsoluteDifference8Bit.v
 │   │
-│   ├── ErrorDetection/
-│   │   ├── ParityChecker8Bit.v
+│   ├── Error/
+│   │   ├── ParityChecker8Bit.v   ✓
 │   │   ├── ParityGenerator8Bit.v
 │   │   ├── EvenParityChecker.v
 │   │   ├── OddParityChecker.v
@@ -131,21 +131,21 @@ coq-circuits/
 │   │   ├── CRC8.v
 │   │   └── LongitudinalParity.v
 │   │
-│   ├── PatternRecognition/
+│   ├── Pattern/
 │   │   ├── HammingDistance8Bit.v
-│   │   ├── AllOnes.v
-│   │   ├── AllZeros.v
+│   │   ├── AllOnes.v             ✓
+│   │   ├── AllZeros.v            ✓
 │   │   ├── LeadingOnes.v
 │   │   ├── TrailingOnes.v
 │   │   ├── Symmetry8Bit.v
 │   │   ├── Alternating8Bit.v
 │   │   ├── RunLength.v
 │   │   ├── PopCount.v
-│   │   └── OneHotDetector.v
+│   │   └── OneHotDetector.v      ✓
 │   │
 │   ├── Combinational/
-│   │   ├── Multiplexer2to1.v
-│   │   ├── Multiplexer4to1.v
+│   │   ├── Multiplexer2to1.v     ✓
+│   │   ├── Multiplexer4to1.v     ✓
 │   │   ├── Multiplexer8to1.v
 │   │   ├── Demultiplexer1to2.v
 │   │   ├── Demultiplexer1to4.v
@@ -343,16 +343,16 @@ Items 1-5 complete
 **Sanity Test 3**: Verify MOD-2 = XOR = Parity ✓
 
 ### Phase 5: Arithmetic (Items 41-57)
-- [ ] 41. HalfAdder.v
-- [ ] 42. FullAdder.v
-- [ ] 43. RippleCarry2Bit.v
-- [ ] 44. RippleCarry4Bit.v
-- [ ] 45. RippleCarry8Bit.v
-- [ ] 46. Incrementer8Bit.v
-- [ ] 47. Decrementer8Bit.v
+- [x] 41. HalfAdder.v
+- [x] 42. FullAdder.v
+- [x] 43. RippleCarry2Bit.v
+- [x] 44. RippleCarry4Bit.v
+- [x] 45. RippleCarry8Bit.v
+- [x] 46. Incrementer8Bit.v
+- [x] 47. Decrementer8Bit.v
 - [ ] 48. Multiplier2x2.v
 - [ ] 49. Multiplier4x4.v
-- [ ] 50. Equality8Bit.v
+- [x] 50. Equality8Bit.v
 - [ ] 51. GreaterThan8Bit.v
 - [ ] 52. LessThan8Bit.v
 - [ ] 53. GreaterOrEqual8Bit.v
@@ -363,8 +363,85 @@ Items 1-5 complete
 
 **Sanity Test 4**: Verify RippleCarry8Bit = composition of FullAdders
 
-### Phases 5-25
-Arithmetic, error detection, pattern recognition, combinational logic, OCaml extraction, weight generation, HuggingFace publishing, integration testing.
+### Phase 6: Error Detection (Items 58-68)
+- [x] 58. ParityChecker8Bit.v
+- [ ] 59. ParityGenerator8Bit.v
+- [ ] 60. EvenParityChecker.v
+- [ ] 61. OddParityChecker.v
+- [ ] 62. Checksum8Bit.v
+- [ ] 63. HammingEncode4Bit.v
+- [ ] 64. HammingDecode7Bit.v
+- [ ] 65. HammingSyndrome.v
+- [ ] 66. CRC4.v
+- [ ] 67. CRC8.v
+- [ ] 68. LongitudinalParity.v
+
+**Sanity Test 10**: EvenParity = NOT(OddParity)
+**Sanity Test 11**: ParityGenerator8Bit = MOD-2 residue 1
+
+### Phase 7: Pattern Recognition (Items 69-78)
+- [ ] 69. HammingDistance8Bit.v
+- [x] 70. AllOnes.v
+- [x] 71. AllZeros.v
+- [ ] 72. LeadingOnes.v
+- [ ] 73. TrailingOnes.v
+- [ ] 74. Symmetry8Bit.v
+- [ ] 75. Alternating8Bit.v
+- [ ] 76. RunLength.v
+- [ ] 77. PopCount.v
+- [x] 78. OneHotDetector.v
+
+**Sanity Test 6**: AllOnes = AllOutOfEight (8-of-8 threshold)
+**Sanity Test 7**: AllZeros = NOT(OneOutOfEight)
+**Sanity Test 8**: PopCount = hamming_weight
+**Sanity Test 9**: OneHotDetector = ExactlyK(1)
+**Sanity Test 12**: HammingDistance(A,B) = PopCount(XOR(A,B))
+
+### Phase 8: Combinational Logic (Items 79-88)
+- [x] 79. Multiplexer2to1.v
+- [x] 80. Multiplexer4to1.v
+- [ ] 81. Multiplexer8to1.v
+- [ ] 82. Demultiplexer1to2.v
+- [ ] 83. Demultiplexer1to4.v
+- [ ] 84. Demultiplexer1to8.v
+- [ ] 85. Encoder8to3.v
+- [ ] 86. Decoder3to8.v
+- [ ] 87. PriorityEncoder8Bit.v
+- [ ] 88. BarrelShifter8Bit.v
+
+**Sanity Test 18**: Mux2to1(s,a,b) = OR(AND(NOT(s),a), AND(s,b))
+**Sanity Test 19**: Decoder3to8 ∘ Encoder8to3 = identity (on valid inputs)
+
+### Remaining Phases
+- Phase 9: Comparators (GreaterThan, LessThan, etc.)
+- Phase 10: Min/Max/AbsDiff
+- Phase 11: Multipliers
+- Phase 12-20: Extraction, weights, HuggingFace, integration
+
+## Sanity Test Summary
+
+| Test | Relationship | Status |
+|------|--------------|--------|
+| ST1 | NAND ∘ NAND = AND | Pending |
+| ST2 | Majority = FiveOutOfEight = AtLeastK(5) | ✓ Done |
+| ST3 | MOD-2 = XOR = Parity | ✓ Done |
+| ST4 | RippleCarry8Bit = 8 × FullAdder | Pending |
+| ST5 | NOR ∘ NOR = OR | Pending |
+| ST6 | AllOnes = AllOutOfEight | Pending |
+| ST7 | AllZeros = NOT(OneOutOfEight) | Pending |
+| ST8 | PopCount = hamming_weight | Pending |
+| ST9 | OneHotDetector = ExactlyK(1) | Pending |
+| ST10 | EvenParity = NOT(OddParity) | Pending |
+| ST11 | ParityGenerator = MOD-2 residue 1 | Pending |
+| ST12 | HammingDistance(A,B) = PopCount(XOR(A,B)) | Pending |
+| ST13 | Equality8Bit = AND(XNOR(a_i,b_i)...) | Pending |
+| ST14 | GreaterThan = NOT(LessOrEqual) | Pending |
+| ST15 | LessThan = NOT(GreaterOrEqual) | Pending |
+| ST16 | Max(A,B) = IF GT(A,B) THEN A ELSE B | Pending |
+| ST17 | Incrementer = RippleCarry(A, 0x01) | Pending |
+| ST18 | Mux2to1 = OR(AND(NOT(s),a), AND(s,b)) | Pending |
+| ST19 | Decoder ∘ Encoder = identity | Pending |
+| ST20 | CRC divisibility properties | Pending |
 
 Total: 132 items
 
