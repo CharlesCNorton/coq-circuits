@@ -249,7 +249,11 @@ class NeuralComputer:
         if immediate & 0x20:
             immediate |= 0xC0
 
-        if opcode == 13:  # LDI - bypass ALU, load immediate (unsigned 6-bit)
+        if opcode == 14:  # JMP - unconditional jump
+            target = instruction & 0xFF
+            self.pc = target
+            return
+        elif opcode == 13:  # LDI - bypass ALU, load immediate (unsigned 6-bit)
             val = instruction & 0x3F
             self.registers[dest] = val
             self.flags["Z"] = 1 if val == 0 else 0
@@ -457,10 +461,29 @@ class Assembler:
     """Assembler for the neural computer's instruction set."""
 
     OPCODES = {
+        # ALU operations (opcode 0-12)
         'ADD': 0, 'SUB': 1, 'AND': 2, 'OR': 3,
         'XOR': 4, 'NOT': 5, 'SHL': 6, 'SHR': 7,
         'INC': 8, 'DEC': 9, 'CMP': 10, 'NEG': 11,
-        'MOV': 12, 'LDI': 13, 'NOP': 15,
+        'MOV': 12, 'LDI': 13,
+        # Control flow (opcode 14) - condition in bits 11-8
+        'JMP': 14, 'JZ': 14, 'JNZ': 14, 'JC': 14,
+        'JNC': 14, 'JN': 14, 'JP': 14, 'JV': 14,
+        # Extended ops (opcode 15) - sub-opcode in bits 11-8
+        'NOP': 15, 'LD': 15, 'ST': 15,
+        'PUSH': 15, 'POP': 15, 'CALL': 15, 'RET': 15,
+    }
+
+    # Condition codes for jumps (bits 11-8 when opcode=14)
+    CONDITIONS = {
+        'JMP': 0, 'JZ': 1, 'JNZ': 2, 'JC': 3,
+        'JNC': 4, 'JN': 5, 'JP': 6, 'JV': 7,
+    }
+
+    # Sub-opcodes for extended operations (bits 11-8 when opcode=15)
+    EXTENDED_OPS = {
+        'NOP': 0, 'LD': 1, 'ST': 2,
+        'PUSH': 3, 'POP': 4, 'CALL': 5, 'RET': 6,
     }
 
     REGISTERS = {'R0': 0, 'R1': 1, 'R2': 2, 'R3': 3}
@@ -527,10 +550,63 @@ class Assembler:
             # Load immediate: LDI dest, imm
             dest = self.REGISTERS[parts[1].upper()]
             immediate = int(parts[2]) & 0x3F
+        elif mnemonic in ['JMP', 'JZ', 'JNZ', 'JC', 'JNC', 'JN', 'JP', 'JV']:
+            # Jump instructions: Jxx addr or Jxx label
+            target = parts[1]
+            if target in self.labels:
+                addr = self.labels[target] & 0xFF
+            else:
+                addr = int(target) & 0xFF
+            cond = self.CONDITIONS[mnemonic]
+            return (opcode << 12) | (cond << 8) | addr
+        elif mnemonic == 'LD':
+            # Load from memory: LD dest, [addr] or LD dest, addr
+            dest = self.REGISTERS[parts[1].upper()]
+            addr_str = parts[2].strip('[]')
+            if addr_str in self.labels:
+                addr = self.labels[addr_str] & 0xFF
+            else:
+                addr = int(addr_str) & 0xFF
+            sub_op = self.EXTENDED_OPS['LD']
+            return (opcode << 12) | (sub_op << 8) | (dest << 6) | (addr & 0x3F)
+        elif mnemonic == 'ST':
+            # Store to memory: ST src, [addr] or ST src, addr
+            src = self.REGISTERS[parts[1].upper()]
+            addr_str = parts[2].strip('[]')
+            if addr_str in self.labels:
+                addr = self.labels[addr_str] & 0xFF
+            else:
+                addr = int(addr_str) & 0xFF
+            sub_op = self.EXTENDED_OPS['ST']
+            return (opcode << 12) | (sub_op << 8) | (src << 6) | (addr & 0x3F)
+        elif mnemonic == 'PUSH':
+            # Push register: PUSH reg
+            reg = self.REGISTERS[parts[1].upper()]
+            sub_op = self.EXTENDED_OPS['PUSH']
+            return (opcode << 12) | (sub_op << 8) | (reg << 6)
+        elif mnemonic == 'POP':
+            # Pop to register: POP reg
+            reg = self.REGISTERS[parts[1].upper()]
+            sub_op = self.EXTENDED_OPS['POP']
+            return (opcode << 12) | (sub_op << 8) | (reg << 6)
+        elif mnemonic == 'CALL':
+            # Call subroutine: CALL addr or CALL label
+            target = parts[1]
+            if target in self.labels:
+                addr = self.labels[target] & 0xFF
+            else:
+                addr = int(target) & 0xFF
+            sub_op = self.EXTENDED_OPS['CALL']
+            return (opcode << 12) | (sub_op << 8) | addr
+        elif mnemonic == 'RET':
+            # Return from subroutine
+            sub_op = self.EXTENDED_OPS['RET']
+            return (opcode << 12) | (sub_op << 8)
         elif mnemonic == 'NOP':
-            pass
+            sub_op = self.EXTENDED_OPS['NOP']
+            return (opcode << 12) | (sub_op << 8)
 
-        # Encode instruction
+        # Encode standard instruction
         instruction = (opcode << 12) | (dest << 10) | (src1 << 8) | (src2 << 6) | immediate
         return instruction
 
@@ -542,24 +618,61 @@ class Assembler:
         src2 = (instruction >> 6) & 0x3
         immediate = instruction & 0x3F
 
-        op_names = {v: k for k, v in self.OPCODES.items()}
         reg_names = {v: k for k, v in self.REGISTERS.items()}
 
-        mnemonic = op_names.get(opcode, '???')
+        # Handle control flow (opcode 14)
+        if opcode == 14:
+            cond = (instruction >> 8) & 0xF
+            addr = instruction & 0xFF
+            cond_names = {v: k for k, v in self.CONDITIONS.items()}
+            mnemonic = cond_names.get(cond, 'J??')
+            return f"{mnemonic} 0x{addr:02X}"
+
+        # Handle extended ops (opcode 15)
+        if opcode == 15:
+            sub_op = (instruction >> 8) & 0xF
+            ext_names = {v: k for k, v in self.EXTENDED_OPS.items()}
+            mnemonic = ext_names.get(sub_op, '???')
+            if mnemonic == 'NOP':
+                return 'NOP'
+            elif mnemonic == 'LD':
+                reg = (instruction >> 6) & 0x3
+                addr = instruction & 0x3F
+                return f"LD {reg_names[reg]}, [0x{addr:02X}]"
+            elif mnemonic == 'ST':
+                reg = (instruction >> 6) & 0x3
+                addr = instruction & 0x3F
+                return f"ST {reg_names[reg]}, [0x{addr:02X}]"
+            elif mnemonic == 'PUSH':
+                reg = (instruction >> 6) & 0x3
+                return f"PUSH {reg_names[reg]}"
+            elif mnemonic == 'POP':
+                reg = (instruction >> 6) & 0x3
+                return f"POP {reg_names[reg]}"
+            elif mnemonic == 'CALL':
+                addr = instruction & 0xFF
+                return f"CALL 0x{addr:02X}"
+            elif mnemonic == 'RET':
+                return 'RET'
+            return mnemonic
+
+        # Handle ALU operations
         d = reg_names[dest]
         s1 = reg_names[src1]
         s2 = reg_names[src2]
 
-        if mnemonic in ['ADD', 'SUB', 'AND', 'OR', 'XOR', 'CMP']:
-            return f"{mnemonic} {d}, {s1}, {s2}"
-        elif mnemonic in ['NOT', 'NEG', 'INC', 'DEC', 'SHL', 'SHR']:
-            return f"{mnemonic} {d}, {s1}"
-        elif mnemonic == 'MOV':
-            return f"{mnemonic} {d}, {s1}"
-        elif mnemonic == 'LDI':
-            return f"{mnemonic} {d}, {immediate}"
+        if opcode in [0, 1, 2, 3, 4, 10]:  # ADD, SUB, AND, OR, XOR, CMP
+            op_names = {0: 'ADD', 1: 'SUB', 2: 'AND', 3: 'OR', 4: 'XOR', 10: 'CMP'}
+            return f"{op_names[opcode]} {d}, {s1}, {s2}"
+        elif opcode in [5, 6, 7, 8, 9, 11]:  # NOT, SHL, SHR, INC, DEC, NEG
+            op_names = {5: 'NOT', 6: 'SHL', 7: 'SHR', 8: 'INC', 9: 'DEC', 11: 'NEG'}
+            return f"{op_names[opcode]} {d}, {s1}"
+        elif opcode == 12:  # MOV
+            return f"MOV {d}, {s1}"
+        elif opcode == 13:  # LDI
+            return f"LDI {d}, {immediate}"
         else:
-            return mnemonic
+            return f"??? (0x{instruction:04X})"
 
 
 def demo():

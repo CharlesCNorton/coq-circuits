@@ -109,6 +109,12 @@ ALU/ALUFlags.v
 ALU/ALUControl.v
 ALU/ALU8Bit.v
 
+# Control flow circuits
+Control/Jump.v
+Control/ConditionalJump.v
+Control/MemoryAccess.v
+Control/Stack.v
+
 # Extraction modules
 Extraction/ExtractModular.v
 Extraction/ExtractBoolean.v
