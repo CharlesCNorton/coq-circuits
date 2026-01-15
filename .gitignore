@@ -20,6 +20,8 @@
 _build/
 
 # Python
+*.py
+!computer/assembler.py
 __pycache__/
 *.pyc
 *.pyo
@@ -44,14 +46,6 @@ extracted/*.mli
 # Temporary files
 *.tmp
 *.log
-upload_*.py
-test_*.py
-generate_*.py
-create_*.py
-add_to_collection.py
-rename_*.py
-fix_*.py
-reupload_*.py
 
 # Weights (upload to HuggingFace, not repo)
 weights/
