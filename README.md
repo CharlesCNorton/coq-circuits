@@ -4,7 +4,7 @@ Formally verified threshold logic circuits with axiom-free Coq proofs.
 
 ## Status
 
-**Progress**: 86/89 circuits complete (96.6%) — ALU planned
+**Progress**: 89/89 circuits complete (100%)
 
 **Uploaded to HuggingFace**: 31 models
 
@@ -23,14 +23,14 @@ Threshold logic circuits built using algebraically-constructed weight functions.
 
 ### Circuit Categories (89 total)
 
-- **Modular Arithmetic**: MOD-2 through MOD-12 (12 circuits)
-- **Boolean Logic**: AND, OR, NAND, NOR, XOR, XNOR, NOT, Implies, BiImplies (9 circuits)
-- **Threshold Functions**: Majority, k-out-of-n variants (14 circuits)
-- **Arithmetic**: Adders, multipliers, comparators (17 circuits)
-- **Error**: Parity, Hamming codes, CRC (11 circuits)
-- **Pattern**: Hamming distance, symmetry, detectors (10 circuits)
-- **Combinational Logic**: Muxes, encoders, decoders (10 circuits)
-- **ALU**: 8-bit ALU with control and flags (3 circuits, planned)
+- **Modular Arithmetic**: MOD-2 through MOD-12 (12 circuits) ✓
+- **Boolean Logic**: AND, OR, NAND, NOR, XOR, XNOR, NOT, Implies, BiImplies (9 circuits) ✓
+- **Threshold Functions**: Majority, k-out-of-n variants (14 circuits) ✓
+- **Arithmetic**: Adders, multipliers, comparators (17 circuits) ✓
+- **Error**: Parity, Hamming codes, CRC (11 circuits) ✓
+- **Pattern**: Hamming distance, symmetry, detectors (10 circuits) ✓
+- **Combinational Logic**: Muxes, encoders, decoders (10 circuits) ✓
+- **ALU**: 8-bit ALU with control and flags (3 circuits) ✓
 
 ### Verification
 
@@ -170,9 +170,9 @@ coq-circuits/
 │   │   └── SanityTest19.v        ✓
 │   │
 │   ├── ALU/
-│   │   ├── ALU8Bit.v             (planned - 8-bit ALU combining arithmetic/logic ops)
-│   │   ├── ALUControl.v          (planned - opcode decoder for ALU operations)
-│   │   └── ALUFlags.v            (planned - zero/carry/overflow/negative flags)
+│   │   ├── ALUFlags.v            ✓
+│   │   ├── ALUControl.v          ✓
+│   │   └── ALU8Bit.v             ✓
 │   │
 │   └── Extraction/
 │       ├── ExtractModular.v
@@ -184,7 +184,7 @@ coq-circuits/
 │       └── ExtractCombinational.v
 ```
 
-**Total: 86 circuits complete, 3 planned (ALU) across 8 categories**
+**Total: 89 circuits complete across 9 categories**
 
 ## Workflow
 
@@ -431,8 +431,12 @@ Items 1-5 complete
 **Sanity Test 18**: Mux2to1(s,a,b) = OR(AND(NOT(s),a), AND(s,b))
 **Sanity Test 19**: Decoder3to8 ∘ Encoder8to3 = identity (on valid inputs)
 
+### Phase 9: ALU (Items 89-91) ✓
+- [x] 89. ALUFlags.v
+- [x] 90. ALUControl.v
+- [x] 91. ALU8Bit.v
+
 ### Remaining Work
-- Phase 9: ALU (3 circuits: ALU8Bit, ALUControl, ALUFlags)
 - Phase 10: Extraction modules (7 modules)
 - Phase 11: Weight generation and HuggingFace uploads
 

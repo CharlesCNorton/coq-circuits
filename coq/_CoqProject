@@ -104,6 +104,11 @@ Combinational/Decoder3to8.v
 Combinational/PriorityEncoder8Bit.v
 Combinational/BarrelShifter8Bit.v
 
+# ALU circuits
+ALU/ALUFlags.v
+ALU/ALUControl.v
+ALU/ALU8Bit.v
+
 # Extraction modules
 Extraction/ExtractModular.v
 Extraction/ExtractBoolean.v
