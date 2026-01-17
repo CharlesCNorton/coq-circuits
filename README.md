@@ -1,483 +1,171 @@
 # Coq Circuits
 
-Threshold logic circuits with Coq proofs. Building toward a complete threshold logic computer.
+Formally verified threshold logic circuits in Coq, culminating in a Turing-complete 8-bit computer.
 
-## Status
+## Status: Complete
 
-**Circuits**: 89/89 complete (100%)
-**Computer**: 8-bit ALU operational, control flow planned
+**108 verified modules** across 10 categories. All proofs axiom-free.
 
 Weights: [HuggingFace/phanerozoic](https://huggingface.co/phanerozoic)
 
 ## Overview
 
-Threshold logic circuits built using algebraically-constructed weight functions. All circuits use Heaviside step activation and are compatible with neuromorphic hardware (Loihi, TrueNorth, Akida).
+Threshold logic circuits using Heaviside step activation, compatible with neuromorphic hardware (Loihi, TrueNorth, Akida).
 
 ```
 output = 1  if  sum(weight * input) + bias >= 0
 output = 0  otherwise
 ```
 
-### Circuit Categories (89 complete)
+## 8-Bit Threshold Computer
 
-- **Modular Arithmetic**: MOD-2 through MOD-12 (12 circuits) ✓
-- **Boolean Logic**: AND, OR, NAND, NOR, XOR, XNOR, NOT, Implies, BiImplies (9 circuits) ✓
-- **Threshold Functions**: Majority, k-out-of-n variants (14 circuits) ✓
-- **Arithmetic**: Adders, multipliers, comparators (17 circuits) ✓
-- **Error**: Parity, Hamming codes, CRC (11 circuits) ✓
-- **Pattern**: Hamming distance, symmetry, detectors (10 circuits) ✓
-- **Combinational Logic**: Muxes, encoders, decoders (10 circuits) ✓
-- **ALU**: 8-bit ALU with control and flags (3 circuits) ✓
+A complete, formally verified 8-bit computer built entirely from threshold neurons.
 
-### 8-Bit Threshold Computer
+| Component | Files | Status |
+|-----------|-------|--------|
+| Base Library | 5 | Complete |
+| Boolean Logic | 11 | Complete |
+| Modular Arithmetic | 13 | Complete |
+| Threshold Functions | 14 | Complete |
+| Arithmetic | 19 | Complete |
+| Error Detection | 12 | Complete |
+| Pattern Recognition | 15 | Complete |
+| Combinational Logic | 12 | Complete |
+| ALU (16 ops, flags) | 3 | Complete |
+| Control (JMP, Jcc, LD/ST, stack) | 4 | Complete |
 
-| Component | Status |
-|-----------|--------|
-| Registers (R0-R3) | ✓ Complete |
-| 8-bit ALU (16 ops) | ✓ Complete |
-| Status Flags (Z,N,C,V) | ✓ Complete |
-| Assembler | ✓ Complete |
-| Control Flow (JMP, Jcc) | Planned |
-| Memory Access (LD, ST) | Planned |
-| Stack (PUSH, POP) | Planned |
+### Architecture
 
-Current: `8bit-threshold-computer` - a programmable ALU
-Target: Turing-complete threshold logic computer
+- **Registers**: R0-R3 (8-bit)
+- **ALU**: ADD, SUB, AND, OR, XOR, NOT, SHL, SHR, INC, DEC, CMP, NEG, PASS, ZERO, ONES, NOP
+- **Flags**: Zero, Negative, Carry, Overflow
+- **Control Flow**: JMP, JZ, JNZ, JC, JNC, JN, JP, JV, JNV
+- **Memory**: LD, ST (256-byte address space)
+- **Stack**: PUSH, POP, CALL, RET
 
 ### Verification
 
-All circuits proven correct using three independent methods:
+All circuits proven correct using:
 1. **Exhaustive**: `vm_compute` over all inputs
 2. **Constructive**: Universal quantifier proofs
 3. **Algebraic**: Mathematical correctness proofs
 
-All proofs axiom-free.
+All proofs axiom-free (`Print Assumptions` returns `Closed under the global context`).
 
 ## Repository Structure
 
 ```
 coq-circuits/
-├── LICENSE
-├── README.md
+├── computer/
+│   ├── assembler.py              # Assembler for threshold computer
+│   ├── neural_computer_architecture.json
+│   └── README.md
 │
-├── coq/
-│   ├── _CoqProject              ✓
-│   ├── Makefile (planned)
-│   │
-│   ├── Base/
-│   │   ├── Definitions.v         ✓
-│   │   ├── Tactics.v             ✓
-│   │   ├── WeightPatterns.v      ✓
-│   │   ├── Verification.v        ✓
-│   │   └── Composition.v         ✓
-│   │
-│   ├── Boolean/
-│   │   ├── NOT.v                 ✓
-│   │   ├── AND.v                 ✓
-│   │   ├── OR.v                  ✓
-│   │   ├── NAND.v                ✓
-│   │   ├── NOR.v                 ✓
-│   │   ├── XOR.v                 ✓
-│   │   ├── XNOR.v                ✓
-│   │   ├── Implies.v             ✓
-│   │   ├── BiImplies.v           ✓
-│   │   ├── SanityTest1.v         ✓
-│   │   └── SanityTest5.v         ✓
-│   │
-│   ├── Modular/
-│   │   ├── ModMParametric.v      ✓
-│   │   ├── Mod2.v                ✓
-│   │   ├── Mod3.v                ✓
-│   │   ├── Mod4.v                ✓
-│   │   ├── Mod5.v                ✓
-│   │   ├── Mod6.v                ✓
-│   │   ├── Mod7.v                ✓
-│   │   ├── Mod8.v                ✓
-│   │   ├── Mod9.v                ✓
-│   │   ├── Mod10.v               ✓
-│   │   ├── Mod11.v               ✓
-│   │   ├── Mod12.v               ✓
-│   │   └── SanityTest3.v         ✓
-│   │
-│   ├── Threshold/
-│   │   ├── Majority.v            ✓
-│   │   ├── Minority.v            ✓
-│   │   ├── KOutOfN.v             ✓
-│   │   ├── OneOutOfEight.v       ✓
-│   │   ├── TwoOutOfEight.v       ✓
-│   │   ├── ThreeOutOfEight.v     ✓
-│   │   ├── FourOutOfEight.v      ✓
-│   │   ├── FiveOutOfEight.v      ✓
-│   │   ├── SixOutOfEight.v       ✓
-│   │   ├── SevenOutOfEight.v     ✓
-│   │   ├── AllOutOfEight.v       ✓
-│   │   ├── AtLeastK.v            ✓
-│   │   ├── AtMostK.v             ✓
-│   │   └── ExactlyK.v            ✓
-│   │
-│   ├── Arithmetic/
-│   │   ├── HalfAdder.v           ✓
-│   │   ├── FullAdder.v           ✓
-│   │   ├── RippleCarry2Bit.v     ✓
-│   │   ├── RippleCarry4Bit.v     ✓
-│   │   ├── RippleCarry8Bit.v     ✓
-│   │   ├── Incrementer8Bit.v     ✓
-│   │   ├── Decrementer8Bit.v     ✓
-│   │   ├── Multiplier2x2.v       ✓
-│   │   ├── Multiplier4x4.v       ✓
-│   │   ├── Equality8Bit.v        ✓
-│   │   ├── GreaterThan8Bit.v     ✓
-│   │   ├── LessThan8Bit.v        ✓
-│   │   ├── GreaterOrEqual8Bit.v  ✓
-│   │   ├── LessOrEqual8Bit.v     ✓
-│   │   ├── Max8Bit.v             ✓
-│   │   ├── Min8Bit.v             ✓
-│   │   ├── AbsoluteDifference8Bit.v ✓
-│   │   ├── SanityTest13.v        ✓
-│   │   └── SanityTest17.v        ✓
-│   │
-│   ├── Error/
-│   │   ├── ParityChecker8Bit.v   ✓
-│   │   ├── ParityGenerator8Bit.v ✓
-│   │   ├── EvenParityChecker.v   ✓
-│   │   ├── OddParityChecker.v    ✓
-│   │   ├── Checksum8Bit.v        ✓
-│   │   ├── HammingEncode4Bit.v   ✓
-│   │   ├── HammingDecode7Bit.v   ✓
-│   │   ├── HammingSyndrome.v     ✓
-│   │   ├── CRC4.v                ✓
-│   │   ├── CRC8.v                ✓
-│   │   ├── LongitudinalParity.v  ✓
-│   │   └── SanityTest10.v        ✓
-│   │
-│   ├── Pattern/
-│   │   ├── HammingDistance8Bit.v ✓
-│   │   ├── AllOnes.v             ✓
-│   │   ├── AllZeros.v            ✓
-│   │   ├── LeadingOnes.v         ✓
-│   │   ├── TrailingOnes.v        ✓
-│   │   ├── Symmetry8Bit.v        ✓
-│   │   ├── Alternating8Bit.v     ✓
-│   │   ├── RunLength.v           ✓
-│   │   ├── PopCount.v            ✓
-│   │   ├── OneHotDetector.v      ✓
-│   │   ├── SanityTest6.v         ✓
-│   │   ├── SanityTest7.v         ✓
-│   │   ├── SanityTest8.v         ✓
-│   │   ├── SanityTest9.v         ✓
-│   │   └── SanityTest12.v        ✓
-│   │
-│   ├── Combinational/
-│   │   ├── Multiplexer2to1.v     ✓
-│   │   ├── Multiplexer4to1.v     ✓
-│   │   ├── Multiplexer8to1.v     ✓
-│   │   ├── Demultiplexer1to2.v   ✓
-│   │   ├── Demultiplexer1to4.v   ✓
-│   │   ├── Demultiplexer1to8.v   ✓
-│   │   ├── Encoder8to3.v         ✓
-│   │   ├── Decoder3to8.v         ✓
-│   │   ├── PriorityEncoder8Bit.v ✓
-│   │   ├── BarrelShifter8Bit.v   ✓
-│   │   ├── SanityTest18.v        ✓
-│   │   └── SanityTest19.v        ✓
-│   │
-│   ├── ALU/
-│   │   ├── ALUFlags.v            ✓
-│   │   ├── ALUControl.v          ✓
-│   │   └── ALU8Bit.v             ✓
-│   │
-│   └── Extraction/
-│       ├── ExtractModular.v
-│       ├── ExtractBoolean.v
-│       ├── ExtractThreshold.v
-│       ├── ExtractArithmetic.v
-│       ├── ExtractErrorDetection.v
-│       ├── ExtractPatternRecognition.v
-│       └── ExtractCombinational.v
+└── coq/
+    ├── _CoqProject
+    │
+    ├── Base/                     # 5 files
+    │   ├── Definitions.v
+    │   ├── Tactics.v
+    │   ├── WeightPatterns.v
+    │   ├── Verification.v
+    │   └── Composition.v
+    │
+    ├── Boolean/                  # 11 files
+    │   ├── NOT.v, AND.v, OR.v
+    │   ├── NAND.v, NOR.v
+    │   ├── XOR.v, XNOR.v
+    │   ├── Implies.v, BiImplies.v
+    │   └── SanityTest1.v, SanityTest5.v
+    │
+    ├── Modular/                  # 13 files
+    │   ├── ModMParametric.v
+    │   ├── Mod2.v .. Mod12.v
+    │   └── SanityTest3.v
+    │
+    ├── Threshold/                # 14 files
+    │   ├── Majority.v, Minority.v
+    │   ├── KOutOfN.v
+    │   ├── OneOutOfEight.v .. AllOutOfEight.v
+    │   └── AtLeastK.v, AtMostK.v, ExactlyK.v
+    │
+    ├── Arithmetic/               # 19 files
+    │   ├── HalfAdder.v, FullAdder.v
+    │   ├── RippleCarry2Bit.v, RippleCarry4Bit.v, RippleCarry8Bit.v
+    │   ├── Incrementer8Bit.v, Decrementer8Bit.v
+    │   ├── Multiplier2x2.v, Multiplier4x4.v
+    │   ├── Equality8Bit.v, GreaterThan8Bit.v, LessThan8Bit.v
+    │   ├── GreaterOrEqual8Bit.v, LessOrEqual8Bit.v
+    │   ├── Max8Bit.v, Min8Bit.v, AbsoluteDifference8Bit.v
+    │   └── SanityTest13.v, SanityTest17.v
+    │
+    ├── Error/                    # 12 files
+    │   ├── ParityChecker8Bit.v, ParityGenerator8Bit.v
+    │   ├── EvenParityChecker.v, OddParityChecker.v
+    │   ├── Checksum8Bit.v
+    │   ├── HammingEncode4Bit.v, HammingDecode7Bit.v, HammingSyndrome.v
+    │   ├── CRC4.v, CRC8.v
+    │   ├── LongitudinalParity.v
+    │   └── SanityTest10.v
+    │
+    ├── Pattern/                  # 15 files
+    │   ├── AllOnes.v, AllZeros.v
+    │   ├── LeadingOnes.v, TrailingOnes.v
+    │   ├── Symmetry8Bit.v, Alternating8Bit.v
+    │   ├── HammingDistance8Bit.v, RunLength.v
+    │   ├── PopCount.v, OneHotDetector.v
+    │   └── SanityTest6.v .. SanityTest12.v
+    │
+    ├── Combinational/            # 12 files
+    │   ├── Multiplexer2to1.v, Multiplexer4to1.v, Multiplexer8to1.v
+    │   ├── Demultiplexer1to2.v, Demultiplexer1to4.v, Demultiplexer1to8.v
+    │   ├── Encoder8to3.v, Decoder3to8.v
+    │   ├── PriorityEncoder8Bit.v, BarrelShifter8Bit.v
+    │   └── SanityTest18.v, SanityTest19.v
+    │
+    ├── ALU/                      # 3 files
+    │   ├── ALUFlags.v
+    │   ├── ALUControl.v
+    │   └── ALU8Bit.v
+    │
+    └── Control/                  # 4 files
+        ├── Jump.v
+        ├── ConditionalJump.v
+        ├── MemoryAccess.v
+        └── Stack.v
 ```
-
-**Total: 89 circuits complete across 9 categories**
-
-## Workflow
-
-**For each circuit, complete ALL steps before moving to the next circuit:**
-
-### 1. Write Coq Proof
-Create `.v` file in appropriate category directory (e.g., `coq/Arithmetic/FullAdder.v`).
-
-```coq
-Definition circuit_weights : list Z := [...].
-Definition circuit_bias : Z := ...
-Definition circuit (xs : list bool) : bool := gate circuit_weights circuit_bias xs.
-
-Theorem circuit_correct : forall x0 ... x7,
-  circuit [x0;...;x7] = specification [x0;...;x7].
-Proof. intros. destruct x0,...,x7; reflexivity. Qed.
-
-Print Assumptions circuit_correct.  (* Must be axiom-free *)
-```
-
-### 2. Compile Coq Proof
-Verify the proof compiles without errors:
-```bash
-coqc -R coq "" coq/[Category]/[Circuit].v
-```
-
-### 3. Generate Weights
-Extract weight values from Coq definitions to `.safetensors` format:
-- Create Python script to convert Coq weights to PyTorch tensors
-- Save to `weights/[category]/[circuit].safetensors`
-- Include all layer weights and biases
-
-### 4. Test Weights Exhaustively
-Load `.safetensors` and verify outputs match specification on all valid inputs:
-- Test every possible input combination
-- Verify output equals expected behavior
-- Confirm no weight corruption during serialization
-
-### 5. Create HuggingFace README
-Write `weights/[category]/[Circuit]_README.md` with:
-- Architecture table (inputs, outputs, neurons, parameters, weights, bias)
-- Key properties (accuracy, verification method)
-- Usage example with Python code
-- Coq theorem statement
-- Link to proof: `[coq-circuits/Category/Circuit.v](https://github.com/CharlesCNorton/coq-circuits/blob/main/coq/Category/Circuit.v)`
-- Citation
-
-### 6. Upload to HuggingFace
-**Single command per circuit:**
-```bash
-python -c "from huggingface_hub import HfApi, create_repo; api = HfApi(); \
-  create_repo('phanerozoic/tiny-[Circuit]-verified', repo_type='model', exist_ok=True); \
-  api.upload_file(path_or_fileobj='weights/[category]/[circuit].safetensors', \
-    path_in_repo='[circuit].safetensors', repo_id='phanerozoic/tiny-[Circuit]-verified', repo_type='model'); \
-  api.upload_file(path_or_fileobj='weights/[category]/[Circuit]_README.md', \
-    path_in_repo='README.md', repo_id='phanerozoic/tiny-[Circuit]-verified', repo_type='model'); \
-  api.add_collection_item('phanerozoic/tiny-verified-logic-circuits', \
-    'phanerozoic/tiny-[Circuit]-verified', 'model'); \
-  print('[Circuit] uploaded')"
-```
-
-### 7. Update Main README Tree
-Add checkmark (✓) to circuit in the repository structure tree above.
-
-**CRITICAL:** Complete one circuit fully (steps 1-7) before starting the next. Do not batch process multiple circuits.
-
-### 6. Sanity Testing (Dual Schema)
-
-Beyond proving individual circuits correct, we verify mathematical relationships between circuits using two complementary verification methods.
-
-#### Level 1: Coq Proof Equivalence
-
-Relationships between circuits are proven formally using universal quantification and axiom-free verification:
-
-- **Compositional Relationships**: Prove complex circuits can be built from simpler primitives
-- **Architectural Equivalences**: Prove different implementations compute identical functions
-- **Cross-Category Equivalences**: Prove functions from different domains are equivalent on restricted inputs
-- **Parametric Instantiations**: Prove specialized circuits match their parametric definitions
-
-#### Level 2: Runtime Weight Verification
-
-Concrete weight files uploaded to HuggingFace are tested to ensure they implement proven relationships:
-
-- **Composition Tests**: Simulate circuit composition from primitive weights, verify outputs match composite implementations
-- **Identity Tests**: For proven equivalent circuits, verify weights are identical or related by proven transformations
-- **Algebraic Pattern Tests**: Verify weights follow expected mathematical patterns, confirm biases match specifications
-
-This dual approach bridges the gap between formal proof and practical implementation: abstract correctness proven in Coq is verified to hold for deployed weight files.
-
-## Naming Conventions
-
-- **Coq files**: PascalCase (`Boolean/NOT.v`, `Arithmetic/HalfAdder.v`)
-- **HuggingFace**: `phanerozoic/tiny-[CIRCUIT]-verified`
-- **Weights**: Local only, uploaded to HF (not in repo)
 
 ## Building
 
 ```bash
 cd coq-circuits/coq
 coqc -R . "" Base/Definitions.v
-coqc -R . "" Boolean/NOT.v
-# etc.
+coqc -R . "" Base/Tactics.v
+coqc -R . "" Base/WeightPatterns.v
+coqc -R . "" Base/Verification.v
+coqc -R . "" Base/Composition.v
+# ... remaining files in dependency order
 ```
 
-## Completed Circuits
+## Sanity Tests
 
-### Base Library (5/5)
-- [x] Base/Definitions.v
-- [x] Base/Tactics.v
-- [x] Base/WeightPatterns.v
-- [x] Base/Verification.v
-- [x] Base/Composition.v
+Cross-circuit verification proving mathematical relationships:
 
-### Boolean Logic (9/9) ✓
-- [x] Boolean/NOT.v → [tiny-NOT-verified](https://huggingface.co/phanerozoic/tiny-NOT-verified)
-- [x] Boolean/AND.v → [tiny-AND-verified](https://huggingface.co/phanerozoic/tiny-AND-verified)
-- [x] Boolean/OR.v → [tiny-OR-verified](https://huggingface.co/phanerozoic/tiny-OR-verified)
-- [x] Boolean/NAND.v → [tiny-NAND-verified](https://huggingface.co/phanerozoic/tiny-NAND-verified)
-- [x] Boolean/NOR.v → [tiny-NOR-verified](https://huggingface.co/phanerozoic/tiny-NOR-verified)
-- [x] Boolean/XOR.v → [tiny-XOR-verified](https://huggingface.co/phanerozoic/tiny-XOR-verified)
-- [x] Boolean/XNOR.v → [tiny-XNOR-verified](https://huggingface.co/phanerozoic/tiny-XNOR-verified)
-- [x] Boolean/Implies.v → [tiny-Implies-verified](https://huggingface.co/phanerozoic/tiny-Implies-verified)
-- [x] Boolean/BiImplies.v → [tiny-BiImplies-verified](https://huggingface.co/phanerozoic/tiny-BiImplies-verified)
-
-## Development Checklist
-
-### Phase 1: Base Library ✓
-Items 1-5 complete
-
-### Phase 2: Boolean Logic (Items 6-14) ✓
-- [x] 6. NOT.v
-- [x] 7. AND.v
-- [x] 8. OR.v
-- [x] 9. NAND.v
-- [x] 10. NOR.v
-- [x] 11. XOR.v
-- [x] 12. XNOR.v
-- [x] 13. Implies.v
-- [x] 14. BiImplies.v
-
-**Sanity Test 1**: Compose NAND gates to build AND
-
-### Phase 3: Threshold Functions (Items 15-28) ✓
-- [x] 15. Majority.v → [tiny-Majority-verified](https://huggingface.co/phanerozoic/tiny-Majority-verified)
-- [x] 16. Minority.v → [tiny-Minority-verified](https://huggingface.co/phanerozoic/tiny-Minority-verified)
-- [x] 17. KOutOfN.v (parametric)
-- [x] 18. OneOutOfEight.v → [tiny-1OutOf8-verified](https://huggingface.co/phanerozoic/tiny-1OutOf8-verified)
-- [x] 19. TwoOutOfEight.v → [tiny-2OutOf8-verified](https://huggingface.co/phanerozoic/tiny-2OutOf8-verified)
-- [x] 20. ThreeOutOfEight.v → [tiny-3OutOf8-verified](https://huggingface.co/phanerozoic/tiny-3OutOf8-verified)
-- [x] 21. FourOutOfEight.v → [tiny-4OutOf8-verified](https://huggingface.co/phanerozoic/tiny-4OutOf8-verified)
-- [x] 22. FiveOutOfEight.v → [tiny-5OutOf8-verified](https://huggingface.co/phanerozoic/tiny-5OutOf8-verified)
-- [x] 23. SixOutOfEight.v → [tiny-6OutOf8-verified](https://huggingface.co/phanerozoic/tiny-6OutOf8-verified)
-- [x] 24. SevenOutOfEight.v → [tiny-7OutOf8-verified](https://huggingface.co/phanerozoic/tiny-7OutOf8-verified)
-- [x] 25. AllOutOfEight.v → [tiny-AllOutOf8-verified](https://huggingface.co/phanerozoic/tiny-AllOutOf8-verified)
-- [x] 26. AtLeastK.v (parametric)
-- [x] 27. AtMostK.v (parametric)
-- [x] 28. ExactlyK.v (parametric)
-
-**Sanity Test 2**: Verify Majority = FiveOutOfEight = AtLeastK(5) ✓
-
-### Phase 4: Modular Arithmetic (Items 29-40) ✓
-- [x] 29. ModMParametric.v
-- [x] 30. Mod2.v → [tiny-parity-verified](https://huggingface.co/phanerozoic/tiny-parity-verified)
-- [x] 31. Mod3.v → [tiny-mod3-verified](https://huggingface.co/phanerozoic/tiny-mod3-verified)
-- [x] 32. Mod4.v → [tiny-mod4-verified](https://huggingface.co/phanerozoic/tiny-mod4-verified)
-- [x] 33. Mod5.v → [tiny-mod5-verified](https://huggingface.co/phanerozoic/tiny-mod5-verified)
-- [x] 34. Mod6.v → [tiny-mod6-verified](https://huggingface.co/phanerozoic/tiny-mod6-verified)
-- [x] 35. Mod7.v → [tiny-mod7-verified](https://huggingface.co/phanerozoic/tiny-mod7-verified)
-- [x] 36. Mod8.v → [tiny-mod8-verified](https://huggingface.co/phanerozoic/tiny-mod8-verified)
-- [x] 37. Mod9.v → [tiny-mod9-verified](https://huggingface.co/phanerozoic/tiny-mod9-verified)
-- [x] 38. Mod10.v → [tiny-mod10-verified](https://huggingface.co/phanerozoic/tiny-mod10-verified)
-- [x] 39. Mod11.v → [tiny-mod11-verified](https://huggingface.co/phanerozoic/tiny-mod11-verified)
-- [x] 40. Mod12.v → [tiny-mod12-verified](https://huggingface.co/phanerozoic/tiny-mod12-verified)
-
-**Sanity Test 3**: Verify MOD-2 = XOR = Parity ✓
-
-### Phase 5: Arithmetic (Items 41-57) ✓
-- [x] 41. HalfAdder.v
-- [x] 42. FullAdder.v
-- [x] 43. RippleCarry2Bit.v
-- [x] 44. RippleCarry4Bit.v
-- [x] 45. RippleCarry8Bit.v
-- [x] 46. Incrementer8Bit.v
-- [x] 47. Decrementer8Bit.v
-- [x] 48. Multiplier2x2.v
-- [x] 49. Multiplier4x4.v
-- [x] 50. Equality8Bit.v
-- [x] 51. GreaterThan8Bit.v
-- [x] 52. LessThan8Bit.v
-- [x] 53. GreaterOrEqual8Bit.v
-- [x] 54. LessOrEqual8Bit.v
-- [x] 55. Max8Bit.v
-- [x] 56. Min8Bit.v
-- [x] 57. AbsoluteDifference8Bit.v
-
-**Sanity Test 4**: Verify RippleCarry8Bit = composition of FullAdders
-
-### Phase 6: Error Detection (Items 58-68) ✓
-- [x] 58. ParityChecker8Bit.v
-- [x] 59. ParityGenerator8Bit.v
-- [x] 60. EvenParityChecker.v
-- [x] 61. OddParityChecker.v
-- [x] 62. Checksum8Bit.v
-- [x] 63. HammingEncode4Bit.v
-- [x] 64. HammingDecode7Bit.v
-- [x] 65. HammingSyndrome.v
-- [x] 66. CRC4.v
-- [x] 67. CRC8.v
-- [x] 68. LongitudinalParity.v
-
-**Sanity Test 10**: EvenParity = NOT(OddParity)
-**Sanity Test 11**: ParityGenerator8Bit = MOD-2 residue 1
-
-### Phase 7: Pattern Recognition (Items 69-78) ✓
-- [x] 69. HammingDistance8Bit.v
-- [x] 70. AllOnes.v
-- [x] 71. AllZeros.v
-- [x] 72. LeadingOnes.v
-- [x] 73. TrailingOnes.v
-- [x] 74. Symmetry8Bit.v
-- [x] 75. Alternating8Bit.v
-- [x] 76. RunLength.v
-- [x] 77. PopCount.v
-- [x] 78. OneHotDetector.v
-
-**Sanity Test 6**: AllOnes = AllOutOfEight (8-of-8 threshold)
-**Sanity Test 7**: AllZeros = NOT(OneOutOfEight)
-**Sanity Test 8**: PopCount = hamming_weight
-**Sanity Test 9**: OneHotDetector = ExactlyK(1)
-**Sanity Test 12**: HammingDistance(A,B) = PopCount(XOR(A,B))
-
-### Phase 8: Combinational Logic (Items 79-88) ✓
-- [x] 79. Multiplexer2to1.v
-- [x] 80. Multiplexer4to1.v
-- [x] 81. Multiplexer8to1.v
-- [x] 82. Demultiplexer1to2.v
-- [x] 83. Demultiplexer1to4.v
-- [x] 84. Demultiplexer1to8.v
-- [x] 85. Encoder8to3.v
-- [x] 86. Decoder3to8.v
-- [x] 87. PriorityEncoder8Bit.v
-- [x] 88. BarrelShifter8Bit.v
-
-**Sanity Test 18**: Mux2to1(s,a,b) = OR(AND(NOT(s),a), AND(s,b))
-**Sanity Test 19**: Decoder3to8 ∘ Encoder8to3 = identity (on valid inputs)
-
-### Phase 9: ALU (Items 89-91) ✓
-- [x] 89. ALUFlags.v
-- [x] 90. ALUControl.v
-- [x] 91. ALU8Bit.v
-
-### Remaining Work
-- Phase 10: Extraction modules (7 modules)
-- Phase 11: Weight generation and HuggingFace uploads
-
-## Sanity Test Summary
-
-| Test | Relationship | Status |
-|------|--------------|--------|
-| ST1 | NAND ∘ NAND = AND | ✓ Done |
-| ST2 | Majority = FiveOutOfEight = AtLeastK(5) | ✓ Done |
-| ST3 | MOD-2 = XOR = Parity | ✓ Done |
-| ST4 | RippleCarry8Bit = 8 × FullAdder | Pending |
-| ST5 | NOR ∘ NOR = OR | ✓ Done |
-| ST6 | AllOnes = AllOutOfEight | ✓ Done |
-| ST7 | AllZeros = NOT(OneOutOfEight) | ✓ Done |
-| ST8 | PopCount = hamming_weight | ✓ Done |
-| ST9 | OneHotDetector = ExactlyK(1) | ✓ Done |
-| ST10 | EvenParity = NOT(OddParity) | ✓ Done |
-| ST11 | ParityGenerator = MOD-2 residue 1 | Pending |
-| ST12 | HammingDistance(A,B) = PopCount(XOR(A,B)) | ✓ Done |
-| ST13 | Equality8Bit = AND(XNOR(a_i,b_i)...) | ✓ Done |
-| ST14 | GreaterThan = NOT(LessOrEqual) | ✓ Done |
-| ST15 | LessThan = NOT(GreaterOrEqual) | ✓ Done |
-| ST16 | Max(A,B) = IF GE(A,B) THEN A ELSE B | ✓ Done |
-| ST17 | Incrementer = RippleCarry(A, 0x01) | ✓ Done |
-| ST18 | Mux2to1 = OR(AND(NOT(s),a), AND(s,b)) | ✓ Done |
-| ST19 | Decoder ∘ Encoder = identity | ✓ Done |
-| ST20 | CRC divisibility properties | Pending |
-
-Total: 132 items
+| Test | Relationship | File |
+|------|--------------|------|
+| ST1 | NAND(NAND(x,y), NAND(x,y)) = AND(x,y) | SanityTest1.v |
+| ST3 | MOD-2 = XOR = Parity | SanityTest3.v |
+| ST5 | NOR(NOR(x,y), NOR(x,y)) = OR(x,y) | SanityTest5.v |
+| ST6 | AllOnes = 8-of-8 threshold | SanityTest6.v |
+| ST7 | AllZeros = NOT(1-of-8) | SanityTest7.v |
+| ST8 | PopCount = hamming_weight | SanityTest8.v |
+| ST9 | OneHot = ExactlyK(1) | SanityTest9.v |
+| ST10 | EvenParity = NOT(OddParity) | SanityTest10.v |
+| ST12 | HammingDist(A,B) = PopCount(XOR(A,B)) | SanityTest12.v |
+| ST13 | Equality = AND(XNOR(ai,bi)...) | SanityTest13.v |
+| ST17 | Incrementer = RippleCarry(A, 1) | SanityTest17.v |
+| ST18 | Mux = OR(AND(NOT(s),a), AND(s,b)) | SanityTest18.v |
+| ST19 | Decoder(Encoder(x)) = x | SanityTest19.v |
 
 ## License
 
@@ -487,7 +175,7 @@ MIT
 
 ```bibtex
 @software{coq_circuits_2025,
-  title={Coq Circuits: Formally Verified Threshold Logic},
+  title={Coq Circuits: Formally Verified Threshold Logic Computer},
   author={Norton, Charles},
   url={https://github.com/CharlesCNorton/coq-circuits},
   year={2025}
